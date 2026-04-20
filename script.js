@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════
-   Undangan Digital — Adit & Vika
+   Undangan Digital — Fauzi & Firna
    Premium Wedding Invitation Script
    ═══════════════════════════════════════ */
 
@@ -24,6 +24,54 @@
       createParticles();
     }, 2200);
   });
+
+  // ─── WELCOME COVER ────────────────────
+  // Read guest name from URL param: ?to=Nama+Tamu
+  const urlParams = new URLSearchParams(window.location.search);
+  const guestParam = urlParams.get('to');
+  if (guestParam) {
+    const guestEl = document.getElementById('guest-name');
+    if (guestEl) guestEl.textContent = decodeURIComponent(guestParam);
+  }
+
+  // Block scrolling until invitation is opened
+  document.body.style.overflow = 'hidden';
+
+  const btnOpen = document.getElementById('btn-open-invitation');
+  const welcomeCover = document.getElementById('welcome-cover');
+  const bgMusic = document.getElementById('bg-music');
+  const musicBtn = document.getElementById('music-toggle');
+  let isPlaying = false;
+  let hasInteracted = false;
+
+  if (btnOpen && welcomeCover) {
+    btnOpen.addEventListener('click', () => {
+      welcomeCover.classList.add('hidden');
+      document.body.style.overflow = '';
+
+      // Auto-play music on cover open
+      if (bgMusic) {
+        bgMusic.volume = 0;
+        bgMusic.play().then(() => {
+          // Fade in music
+          let vol = 0;
+          const fadeIn = setInterval(() => {
+            vol = Math.min(vol + 0.05, 0.5);
+            bgMusic.volume = vol;
+            if (vol >= 0.5) clearInterval(fadeIn);
+          }, 150);
+          // Update music button
+          const musicToggle = document.getElementById('music-toggle');
+          if (musicToggle) musicToggle.classList.add('playing');
+        }).catch(() => {});
+      }
+
+      // Trigger AOS refresh so animations fire fresh
+      setTimeout(() => {
+        if (typeof AOS !== 'undefined') AOS.refresh();
+      }, 600);
+    });
+  }
 
   // ─── NAVBAR ────────────────────────────
   const navbar = document.getElementById('navbar');
@@ -152,11 +200,8 @@
     btnGcal.href = gcalUrl;
   }
 
-  // ─── MUSIC TOGGLE & AUTOPLAY ──────────
-  const musicBtn = document.getElementById('music-toggle');
-  const bgMusic = document.getElementById('bg-music');
-  let isPlaying = false;
-  let hasInteracted = false;
+  // ─── MUSIC TOGGLE ──────────────────────
+  // (bgMusic and musicBtn are declared above alongside Welcome Cover)
 
   function playMusic() {
     if (!isPlaying && bgMusic) {
@@ -167,29 +212,20 @@
     }
   }
 
-  // Autoplay on first user interaction (browser policy requirement)
-  ['click', 'touchstart', 'scroll'].forEach(evt => {
-    window.addEventListener(evt, () => {
-      if (!hasInteracted) {
-        hasInteracted = true;
-        playMusic();
-      }
-    }, { once: true });
-  });
-
   if (musicBtn && bgMusic) {
     musicBtn.addEventListener('click', (e) => {
-      e.stopPropagation(); // Prevent triggering window click
-      hasInteracted = true; // Mark as interacted so auto-play doesn't re-trigger
+      e.stopPropagation();
+      hasInteracted = true;
       
       if (isPlaying) {
         bgMusic.pause();
         musicBtn.classList.remove('playing');
+        isPlaying = false;
       } else {
         bgMusic.play().catch(() => { });
         musicBtn.classList.add('playing');
+        isPlaying = true;
       }
-      isPlaying = !isPlaying;
     });
   }
 
