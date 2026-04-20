@@ -152,13 +152,36 @@
     btnGcal.href = gcalUrl;
   }
 
-  // ─── MUSIC TOGGLE ─────────────────────
+  // ─── MUSIC TOGGLE & AUTOPLAY ──────────
   const musicBtn = document.getElementById('music-toggle');
   const bgMusic = document.getElementById('bg-music');
   let isPlaying = false;
+  let hasInteracted = false;
+
+  function playMusic() {
+    if (!isPlaying && bgMusic) {
+      bgMusic.play().then(() => {
+        isPlaying = true;
+        if (musicBtn) musicBtn.classList.add('playing');
+      }).catch(() => { });
+    }
+  }
+
+  // Autoplay on first user interaction (browser policy requirement)
+  ['click', 'touchstart', 'scroll'].forEach(evt => {
+    window.addEventListener(evt, () => {
+      if (!hasInteracted) {
+        hasInteracted = true;
+        playMusic();
+      }
+    }, { once: true });
+  });
 
   if (musicBtn && bgMusic) {
-    musicBtn.addEventListener('click', () => {
+    musicBtn.addEventListener('click', (e) => {
+      e.stopPropagation(); // Prevent triggering window click
+      hasInteracted = true; // Mark as interacted so auto-play doesn't re-trigger
+      
       if (isPlaying) {
         bgMusic.pause();
         musicBtn.classList.remove('playing');
