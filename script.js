@@ -231,59 +231,71 @@
     if (e.key === 'ArrowRight' && lightboxNext) lightboxNext.click();
   });
 
-  // ─── RSVP FORM ────────────────────────
+  // ─── RSVP FORM (BACKEND API) ────────────
   const rsvpForm = document.getElementById('rsvp-form');
   const rsvpSuccess = document.getElementById('rsvp-success');
   const wishesList = document.getElementById('wishes-list');
 
-  // Load saved wishes from localStorage
-  let wishes = JSON.parse(localStorage.getItem('wedding_wishes') || '[]');
-  renderWishes();
+  // Load approved wishes from backend
+  loadWishes();
 
   if (rsvpForm) {
-    rsvpForm.addEventListener('submit', (e) => {
+    rsvpForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       const name = document.getElementById('rsvp-name').value.trim();
-      const attend = document.getElementById('rsvp-attend').value;
+      const attendance = document.getElementById('rsvp-attend').value;
+      const guests = document.getElementById('rsvp-guests').value;
       const message = document.getElementById('rsvp-message').value.trim();
 
-      if (!name || !attend) return;
+      if (!name || !attendance) return;
 
-      // Save wish
-      if (message) {
-        const wish = {
-          name: name,
-          text: message,
-          time: new Date().toLocaleString('id-ID'),
-          attend: attend
-        };
-        wishes.unshift(wish);
-        localStorage.setItem('wedding_wishes', JSON.stringify(wishes));
-        renderWishes();
+      try {
+        const res = await fetch('/api/rsvp', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, attendance, guests: parseInt(guests) || 1, message })
+        });
+        const data = await res.json();
+
+        if (data.success) {
+          rsvpForm.style.display = 'none';
+          if (rsvpSuccess) rsvpSuccess.style.display = 'block';
+          loadWishes(); // refresh wishes
+
+          setTimeout(() => {
+            rsvpForm.reset();
+            rsvpForm.style.display = 'block';
+            if (rsvpSuccess) rsvpSuccess.style.display = 'none';
+          }, 4000);
+        }
+      } catch (err) {
+        alert('Gagal mengirim RSVP. Silakan coba lagi.');
       }
-
-      // Show success
-      rsvpForm.style.display = 'none';
-      if (rsvpSuccess) rsvpSuccess.style.display = 'block';
-
-      // Reset after delay
-      setTimeout(() => {
-        rsvpForm.reset();
-        rsvpForm.style.display = 'block';
-        if (rsvpSuccess) rsvpSuccess.style.display = 'none';
-      }, 4000);
     });
   }
 
-  function renderWishes() {
+  async function loadWishes() {
     if (!wishesList) return;
-    wishesList.innerHTML = wishes.map(w => `
-      <div class="wish-card">
-        <p class="wish-name">${escapeHtml(w.name)} <span style="font-weight:400;color:var(--text-muted);font-size:.75rem">${w.attend === 'hadir' ? '• Hadir' : '• Tidak Hadir'}</span></p>
-        <p class="wish-text">${escapeHtml(w.text)}</p>
-        <p class="wish-time">${w.time}</p>
-      </div>
-    `).join('');
+    try {
+      const res = await fetch('/api/wishes');
+      const wishes = await res.json();
+
+      if (wishes.length === 0) {
+        wishesList.innerHTML = '<p style="text-align:center;color:var(--text-muted);font-size:.85rem;">Belum ada ucapan.</p>';
+        return;
+      }
+
+      wishesList.innerHTML = wishes.map(w => `
+        <div class="wish-card">
+          <p class="wish-name">${escapeHtml(w.name)} <span style="font-weight:400;color:var(--text-muted);font-size:.75rem">${w.attendance === 'hadir' ? '• Hadir' : '• Tidak Hadir'}</span></p>
+          <p class="wish-text">${escapeHtml(w.message)}</p>
+          <p class="wish-time">${w.created_at}</p>
+        </div>
+      `).join('');
+    } catch (err) {
+      // Fallback if server not running
+      wishesList.innerHTML = '';
+    }
   }
 
   function escapeHtml(text) {
