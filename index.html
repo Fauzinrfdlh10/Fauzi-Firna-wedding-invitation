@@ -62,6 +62,7 @@
                 <a href="#events" class="nav-link">Acara</a>
                 <a href="#story" class="nav-link">Love Story</a>
                 <a href="#gallery" class="nav-link">Galeri</a>
+                <a href="#gift" class="nav-link">Gift</a>
                 <a href="#rsvp" class="nav-link">RSVP</a>
             </div>
             <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">
@@ -95,6 +96,18 @@
             </a>
         </div>
     </section>
+    <!-- ═══════════ AYAT SUCI ═══════════ -->
+    <section id="ayat" class="ayat-section">
+        <div class="ayat-bg" style="background-image: url('images/hero-bg.png')"></div>
+        <div class="ayat-overlay"></div>
+        <div class="section-container" style="max-width: 800px; text-align: center; position:relative; z-index:2;">
+            <i class="fas fa-quote-right ayat-icon" data-aos="zoom-in"></i>
+            <p class="ayat-text" data-aos="fade-up" data-aos-delay="200">
+                "Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu pasangan hidup dari jenismu sendiri, supaya kamu merasa tenteram kepadanya, dan dijadikan-Nya diantaramu rasa kasih dan sayang. Sesungguhnya pada yang demikian itu benar-benar terdapat tanda-tanda bagi kaum yang berfikir."
+            </p>
+            <p class="ayat-source" data-aos="fade-up" data-aos-delay="400">QS. Ar-Rum: 21</p>
+        </div>
+    </section>
 
     <!-- ═══════════ SANG MEMPELAI ═══════════ -->
     <section id="couple" class="mempelai-container">
@@ -118,21 +131,42 @@
             </div>
         </div>
 
-        <!-- Groom Parents -->
-        <div class="mempelai-fullscreen" style="background-image: url('images/gallery-4.png');">
-            <div class="mempelai-overlay"></div>
-            <div class="mempelai-content" data-aos="fade-up">
-                <h2 class="mempelai-name">Bapak & Ibu [Nama]</h2>
-                <p class="mempelai-role">Orang Tua Mempelai Pria</p>
-            </div>
-        </div>
+        <!-- Parents Compact Section -->
+        <div class="mempelai-parents-section">
+            <div class="mempelai-parents-bg" style="background-image: url('images/gallery-3.png');"></div>
+            <div class="mempelai-parents-overlay"></div>
+            <div class="section-container" style="position:relative; z-index:2; padding:80px 24px;">
+                <div class="section-header" data-aos="fade-up">
+                    <p class="section-eyebrow">Keluarga Besar</p>
+                    <h2 class="section-title">Orang Tua Mempelai</h2>
+                    <div class="section-ornament">
+                        <span></span><span></span><span></span>
+                    </div>
+                </div>
+                
+                <div class="parents-grid">
+                    <!-- Groom's Parents -->
+                    <div class="parent-box glass-card" data-aos="fade-up" data-aos-delay="100">
+                        <div class="parent-img-circle">
+                            <img src="images/gallery-4.png" alt="Orang Tua Pria">
+                        </div>
+                        <h4 class="parent-box-title">Orang Tua Mempelai Pria</h4>
+                        <p class="parent-box-names">Bapak [Nama Bapak]<br>& Ibu [Nama Ibu]</p>
+                    </div>
 
-        <!-- Bride Parents -->
-        <div class="mempelai-fullscreen" style="background-image: url('images/gallery-5.png');">
-            <div class="mempelai-overlay"></div>
-            <div class="mempelai-content" data-aos="fade-up">
-                <h2 class="mempelai-name">Bapak & Ibu [Nama]</h2>
-                <p class="mempelai-role">Orang Tua Mempelai Wanita</p>
+                    <div class="parent-divider" data-aos="zoom-in" data-aos-delay="300">
+                        <i class="fas fa-heart"></i>
+                    </div>
+
+                    <!-- Bride's Parents -->
+                    <div class="parent-box glass-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="parent-img-circle">
+                            <img src="images/gallery-5.png" alt="Orang Tua Wanita">
+                        </div>
+                        <h4 class="parent-box-title">Orang Tua Mempelai Wanita</h4>
+                        <p class="parent-box-names">Bapak [Nama Bapak]<br>& Ibu [Nama Ibu]</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -389,6 +423,45 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- ═══════════ WEDDING GIFT ═══════════ -->
+    <section id="gift" class="gift-section">
+        <div class="section-container">
+            <div class="section-header" data-aos="fade-up">
+                <p class="section-eyebrow">Kirim Hadiah</p>
+                <h2 class="section-title">Wedding Gift</h2>
+                <div class="section-ornament">
+                    <span></span><span></span><span></span>
+                </div>
+                <p class="gift-desc">Doa Restu Anda merupakan karunia yang sangat berarti bagi kami.<br>Dan jika memberi adalah ungkapan tanda kasih Anda, Anda dapat memberi kado secara cashless melalui:</p>
+            </div>
+
+            <div class="gift-cards">
+                <div class="gift-card glass-card" data-aos="fade-up" data-aos-delay="100">
+                    <i class="fas fa-university gift-icon"></i>
+                    <h3 class="bank-name">Bank BCA</h3>
+                    <p class="bank-account" id="rek-bca">1234567890</p>
+                    <p class="bank-owner">a.n. Fauzi Nur Fadilah</p>
+                    <button class="btn-copy" onclick="copyToClipboard('rek-bca', this)">
+                        <i class="far fa-copy"></i> Salin No. Rekening
+                    </button>
+                </div>
+
+                <div class="gift-card glass-card" data-aos="fade-up" data-aos-delay="200">
+                    <i class="fas fa-wallet gift-icon"></i>
+                    <h3 class="bank-name">Bank Mandiri</h3>
+                    <p class="bank-account" id="rek-mandiri">0987654321</p>
+                    <p class="bank-owner">a.n. Firna Amalia</p>
+                    <button class="btn-copy" onclick="copyToClipboard('rek-mandiri', this)">
+                        <i class="far fa-copy"></i> Salin No. Rekening
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Gift Notification -->
+            <div id="copy-toast" class="copy-toast">Nomor Rekening Berhasil Disalin!</div>
         </div>
     </section>
 

@@ -382,8 +382,45 @@
     });
   }, observerOptions);
 
-  document.querySelectorAll('.glass-card, .event-card').forEach(el => {
+  document.querySelectorAll('.glass-card, .event-card, .gift-card, .parent-box').forEach(el => {
     revealObserver.observe(el);
   });
+
+  // ─── COPY TO CLIPBOARD (GIFT) ─────────
+  window.copyToClipboard = function(elementId, btnElement) {
+    const textToCopy = document.getElementById(elementId).innerText;
+    
+    // Create temporary textarea
+    const tempTextArea = document.createElement("textarea");
+    tempTextArea.value = textToCopy;
+    document.body.appendChild(tempTextArea);
+    tempTextArea.select();
+    tempTextArea.setSelectionRange(0, 99999); // For mobile devices
+    
+    try {
+      document.execCommand("copy");
+      
+      // Show toast notification
+      const toast = document.getElementById("copy-toast");
+      if (toast) {
+        toast.classList.add("show");
+        setTimeout(() => {
+          toast.classList.remove("show");
+        }, 3000);
+      }
+      
+      // Change button text temporarily
+      const originalHtml = btnElement.innerHTML;
+      btnElement.innerHTML = '<i class="fas fa-check"></i> Tersalin!';
+      setTimeout(() => {
+        btnElement.innerHTML = originalHtml;
+      }, 3000);
+      
+    } catch (err) {
+      console.error('Failed to copy text: ', err);
+    }
+    
+    document.body.removeChild(tempTextArea);
+  };
 
 })();
