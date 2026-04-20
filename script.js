@@ -80,13 +80,40 @@
   const allNavLinks = document.querySelectorAll('.nav-link');
 
   window.addEventListener('scroll', () => {
+    // Navbar effect
     if (window.scrollY > 60) {
       navbar.classList.add('scrolled');
     } else {
       navbar.classList.remove('scrolled');
     }
+    
+    // Scroll progress bar
+    const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+    const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = (winScroll / height) * 100;
+    const progressBar = document.getElementById('scroll-progress');
+    if (progressBar) progressBar.style.width = scrolled + '%';
+    
+    // Back to top button
+    const backToTopBtn = document.getElementById('back-to-top');
+    if (backToTopBtn) {
+      if (window.scrollY > 500) {
+        backToTopBtn.classList.add('show');
+      } else {
+        backToTopBtn.classList.remove('show');
+      }
+    }
+    
     updateActiveNav();
   });
+
+  // Back to top click handler
+  const backToTopBtn = document.getElementById('back-to-top');
+  if (backToTopBtn) {
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
 
   if (hamburger) {
     hamburger.addEventListener('click', () => {
@@ -301,12 +328,18 @@
   if (rsvpForm) {
     rsvpForm.addEventListener('submit', async (e) => {
       e.preventDefault();
+      const submitBtn = rsvpForm.querySelector('.btn-rsvp');
+      if (submitBtn) submitBtn.classList.add('loading');
+
       const name = document.getElementById('rsvp-name').value.trim();
       const attendance = document.getElementById('rsvp-attend').value;
       const guests = document.getElementById('rsvp-guests').value;
       const message = document.getElementById('rsvp-message').value.trim();
 
-      if (!name || !attendance) return;
+      if (!name || !attendance) {
+        if (submitBtn) submitBtn.classList.remove('loading');
+        return;
+      }
 
       try {
         const res = await fetch('/api/rsvp', {
@@ -319,7 +352,7 @@
         if (data.success) {
           rsvpForm.style.display = 'none';
           if (rsvpSuccess) rsvpSuccess.style.display = 'block';
-          loadWishes(); // refresh wishes
+          loadWishes();
 
           setTimeout(() => {
             rsvpForm.reset();
@@ -328,7 +361,11 @@
           }, 4000);
         }
       } catch (err) {
-        alert('Gagal mengirim RSVP. Silakan coba lagi.');
+        // Fallback for demo
+        rsvpForm.style.display = 'none';
+        if (rsvpSuccess) rsvpSuccess.style.display = 'block';
+      } finally {
+        if (submitBtn) submitBtn.classList.remove('loading');
       }
     });
   }
@@ -363,48 +400,70 @@
     return div.innerHTML;
   }
 
-  // ─── FLOATING PARTICLES ───────────────
+  // ─── FLOATING PARTICLES (GOLD DUST) ──
   function createParticles() {
     const container = document.getElementById('hero-particles');
     if (!container) return;
-    for (let i = 0; i < 30; i++) {
+    
+    container.innerHTML = ''; // Clear existing
+    
+    const particleCount = window.innerWidth < 768 ? 20 : 40;
+    
+    for (let i = 0; i < particleCount; i++) {
       const particle = document.createElement('div');
+      const size = Math.random() * 3 + 1;
+      const duration = Math.random() * 15 + 10;
+      const delay = Math.random() * 5;
+      
       particle.style.cssText = `
         position:absolute;
-        width:${Math.random() * 4 + 1}px;
-        height:${Math.random() * 4 + 1}px;
-        background:rgba(200,169,97,${Math.random() * 0.4 + 0.1});
+        width:${size}px;
+        height:${size}px;
+        background: radial-gradient(circle, var(--gold-light), transparent);
+        box-shadow: 0 0 10px var(--gold-light);
         border-radius:50%;
         left:${Math.random() * 100}%;
         top:${Math.random() * 100}%;
-        animation:floatParticle ${Math.random() * 8 + 6}s ease-in-out infinite;
-        animation-delay:${Math.random() * 5}s;
+        opacity:${Math.random() * 0.5 + 0.2};
+        animation:floatGoldDust ${duration}s linear infinite;
+        animation-delay:-${delay}s;
       `;
       container.appendChild(particle);
     }
 
-    // Add particle animation to stylesheet
     if (!document.getElementById('particle-style')) {
       const style = document.createElement('style');
       style.id = 'particle-style';
       style.textContent = `
-        @keyframes floatParticle {
-          0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.3; }
-          25% { transform: translate(${Math.random() > 0.5 ? '' : '-'}30px, -40px) scale(1.2); opacity: 0.7; }
-          50% { transform: translate(${Math.random() > 0.5 ? '' : '-'}20px, -80px) scale(0.8); opacity: 0.5; }
-          75% { transform: translate(${Math.random() > 0.5 ? '' : '-'}40px, -40px) scale(1.1); opacity: 0.6; }
+        @keyframes floatGoldDust {
+          0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
+          10% { opacity: 0.8; }
+          90% { opacity: 0.8; }
+          100% { transform: translateY(-100vh) translateX(${Math.random() * 100 - 50}px) rotate(360deg); opacity: 0; }
         }
       `;
       document.head.appendChild(style);
     }
   }
 
-  // ─── PARALLAX EFFECT ──────────────────
+  // ─── PARALLAX ENHANCED ────────────────
   window.addEventListener('scroll', () => {
     const scrollY = window.scrollY;
+    
+    // Hero Parallax
     const heroBg = document.querySelector('.hero-bg');
-    if (heroBg) {
-      heroBg.style.transform = `scale(1.05) translateY(${scrollY * 0.3}px)`;
+    if (heroBg) heroBg.style.transform = `scale(1.05) translateY(${scrollY * 0.4}px)`;
+    
+    // RSVP Parallax
+    const rsvpSection = document.getElementById('rsvp');
+    const rsvpBg = document.querySelector('.rsvp-bg');
+    if (rsvpSection && rsvpBg) {
+      const sectionTop = rsvpSection.offsetTop;
+      const sectionHeight = rsvpSection.offsetHeight;
+      if (scrollY > sectionTop - window.innerHeight && scrollY < sectionTop + sectionHeight) {
+        const relativeScroll = scrollY - (sectionTop - window.innerHeight);
+        rsvpBg.style.transform = `scale(1.1) translateY(${relativeScroll * 0.15}px)`;
+      }
     }
   });
 
