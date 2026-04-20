@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pernikahan Fauzi & Firna — Undangan Digital</title>
+    <meta name="description" content="Undangan Pernikahan Digital Fauzi & Firna — 20 Agustus 2026. Save The Date!">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Montserrat:wght@300;400;500;600;700&family=Great+Vibes&display=swap"
+        rel="stylesheet">
+
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ═══════════ LOADING SCREEN ═══════════ -->
+    <div id="loading-screen">
+        <div class="loader-content">
+            <div class="loader-ring">
+                <div class="loader-ring-inner"></div>
+            </div>
+            <h2 class="loader-initials">F & F</h2>
+            <div class="loader-bar">
+                <div class="loader-progress"></div>
+            </div>
+            <p class="loader-text">Memuat Undangan...</p>
+        </div>
+    </div>
+
+    <!-- ═══════════ MUSIC TOGGLE ═══════════ -->
+    <button id="music-toggle" class="music-toggle" aria-label="Toggle Music">
+        <i class="fas fa-music"></i>
+        <span class="music-waves">
+            <span></span><span></span><span></span>
+        </span>
+    </button>
+    <audio id="bg-music" loop preload="auto">
+        <source src="music/background.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- ═══════════ NAVBAR ═══════════ -->
+    <nav id="navbar" class="navbar">
+        <div class="nav-container">
+            <a href="#home" class="nav-logo">F & F</a>
+            <div class="nav-links" id="nav-links">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#countdown" class="nav-link">Save The Date</a>
+                <a href="#events" class="nav-link">Acara</a>
+                <a href="#story" class="nav-link">Love Story</a>
+                <a href="#gallery" class="nav-link">Galeri</a>
+                <a href="#rsvp" class="nav-link">RSVP</a>
+            </div>
+            <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ═══════════ HERO / OPENING ═══════════ -->
+    <section id="home" class="hero-section">
+        <div class="hero-bg" style="background-image: url('images/hero-bg.png')"></div>
+        <div class="hero-overlay"></div>
+        <!-- Decorative floating particles -->
+        <div class="hero-particles" id="hero-particles"></div>
+        <div class="hero-content">
+            <div class="hero-ornament-top">✦</div>
+            <p class="hero-subtitle" data-aos="fade-down" data-aos-delay="300">THE WEDDING OF</p>
+            <h1 class="hero-names" data-aos="zoom-in" data-aos-delay="600">
+                Fauzi <span class="hero-amp">&</span> Firna
+            </h1>
+            <div class="hero-divider" data-aos="fade-up" data-aos-delay="900">
+                <span class="divider-line"></span>
+                <span class="divider-icon"><i class="fas fa-heart"></i></span>
+                <span class="divider-line"></span>
+            </div>
+            <p class="hero-date" data-aos="fade-up" data-aos-delay="1100">20 . 08 . 2026</p>
+            <p class="hero-save" data-aos="fade-up" data-aos-delay="1300">Save The Date</p>
+            <a href="#countdown" class="hero-scroll" data-aos="fade-up" data-aos-delay="1500">
+                <span class="scroll-text">Scroll</span>
+                <span class="scroll-icon"><i class="fas fa-chevron-down"></i></span>
+            </a>
+        </div>
+    </section>
+
+    <!-- ═══════════ COUNTDOWN TIMER ═══════════ -->
+    <section id="countdown" class="countdown-section">
+        <div class="countdown-bg"></div>
+        <div class="countdown-overlay"></div>
+        <div class="section-container">
+            <div class="section-header" data-aos="fade-up">
+                <p class="section-eyebrow">Menuju Hari Bahagia</p>
+                <h2 class="section-title">Save The Date</h2>
+                <div class="section-ornament">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+
+            <div class="countdown-wrapper" id="countdown-wrapper">
+                <div class="countdown-item" data-aos="fade-up" data-aos-delay="100">
+                    <div class="countdown-card glass-card">
+                        <span id="cd-days" class="countdown-number">00</span>
+                        <span class="countdown-label">Hari</span>
+                    </div>
+                </div>
+                <div class="countdown-separator">:</div>
+                <div class="countdown-item" data-aos="fade-up" data-aos-delay="200">
+                    <div class="countdown-card glass-card">
+                        <span id="cd-hours" class="countdown-number">00</span>
+                        <span class="countdown-label">Jam</span>
+                    </div>
+                </div>
+                <div class="countdown-separator">:</div>
+                <div class="countdown-item" data-aos="fade-up" data-aos-delay="300">
+                    <div class="countdown-card glass-card">
+                        <span id="cd-minutes" class="countdown-number">00</span>
+                        <span class="countdown-label">Menit</span>
+                    </div>
+                </div>
+                <div class="countdown-separator">:</div>
+                <div class="countdown-item" data-aos="fade-up" data-aos-delay="400">
+                    <div class="countdown-card glass-card">
+                        <span id="cd-seconds" class="countdown-number">00</span>
+                        <span class="countdown-label">Detik</span>
+                    </div>
+                </div>
+            </div>
+
+            <p id="countdown-ended" class="countdown-ended-msg" style="display:none;">
+                🎉 Acara Sedang Berlangsung 🎉
+            </p>
+
+            <!-- Save to Calendar Buttons -->
+            <div class="calendar-actions" data-aos="fade-up" data-aos-delay="500">
+                <button id="btn-save-ics" class="btn-calendar">
+                    <i class="fas fa-calendar-plus"></i>
+                    <span>Download .ICS</span>
+                </button>
+                <a id="btn-google-cal" class="btn-calendar btn-google" href="#" target="_blank" rel="noopener">
+                    <i class="fab fa-google"></i>
+                    <span>Google Calendar</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════ INFORMASI ACARA ═══════════ -->
+    <section id="events" class="events-section">
+        <div class="section-container">
+            <div class="section-header" data-aos="fade-up">
+                <p class="section-eyebrow">Rangkaian Acara</p>
+                <h2 class="section-title">Informasi Acara</h2>
+                <div class="section-ornament">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+
+            <div class="events-grid">
+                <!-- Akad Nikah -->
+                <div class="event-card glass-card" data-aos="fade-right" data-aos-delay="100">
+                    <div class="event-icon-wrap">
+                        <i class="fas fa-mosque"></i>
+                    </div>
+                    <h3 class="event-name">Akad Nikah</h3>
+                    <div class="event-details">
+                        <div class="event-row">
+                            <i class="far fa-calendar-alt"></i>
+                            <span>Kamis, 20 Agustus 2026</span>
+                        </div>
+                        <div class="event-row">
+                            <i class="far fa-clock"></i>
+                            <span>08:00 — 10:00 WIB</span>
+                        </div>
+                        <div class="event-row">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Grand Ballroom, Hotel Mulia Senayan, Jakarta</span>
+                        </div>
+                    </div>
+                    <a href="https://maps.google.com/?q=Hotel+Mulia+Senayan+Jakarta" target="_blank" rel="noopener"
+                        class="btn-location">
+                        <i class="fas fa-map-marked-alt"></i> Lihat Lokasi
+                    </a>
+                </div>
+
+                <!-- Resepsi -->
+                <div class="event-card glass-card" data-aos="fade-left" data-aos-delay="200">
+                    <div class="event-icon-wrap">
+                        <i class="fas fa-champagne-glasses"></i>
+                    </div>
+                    <h3 class="event-name">Resepsi</h3>
+                    <div class="event-details">
+                        <div class="event-row">
+                            <i class="far fa-calendar-alt"></i>
+                            <span>Kamis, 20 Agustus 2026</span>
+                        </div>
+                        <div class="event-row">
+                            <i class="far fa-clock"></i>
+                            <span>11:00 — 14:00 WIB</span>
+                        </div>
+                        <div class="event-row">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Grand Ballroom, Hotel Mulia Senayan, Jakarta</span>
+                        </div>
+                    </div>
+                    <a href="https://maps.google.com/?q=Hotel+Mulia+Senayan+Jakarta" target="_blank" rel="noopener"
+                        class="btn-location">
+                        <i class="fas fa-map-marked-alt"></i> Lihat Lokasi
+                    </a>
+                </div>
+            </div>
+
+            <!-- Embedded Map -->
+            <div class="map-embed" data-aos="fade-up" data-aos-delay="300">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.521260322283!2d106.79560931529484!3d-6.217421062710735!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f14d36a6c1f7%3A0x5bbfb9839ab7a3a9!2sHotel%20Mulia%20Senayan!5e0!3m2!1sid!2sid!4v1600000000000!5m2!1sid!2sid"
+                    width="100%" height="300" style="border:0; border-radius: 16px;" allowfullscreen="" loading="lazy">
+                </iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════ LOVE STORY ═══════════ -->
+    <section id="story" class="story-section">
+        <div class="section-container">
+            <div class="section-header" data-aos="fade-up">
+                <p class="section-eyebrow">Perjalanan Cinta Kami</p>
+                <h2 class="section-title">Love Story</h2>
+                <div class="section-ornament">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-line"></div>
+
+                <div class="timeline-item" data-aos="fade-right">
+                    <div class="timeline-dot"><i class="fas fa-heart"></i></div>
+                    <div class="timeline-card glass-card">
+                        <span class="timeline-date">Januari 2020</span>
+                        <h4 class="timeline-heading">Pertama Kali Bertemu</h4>
+                        <p class="timeline-text">Kami pertama kali bertemu di sebuah acara kampus. Sebuah pertemuan tak
+                            sengaja yang terasa seperti takdir — mengubah segalanya dalam hidup kami.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-aos="fade-left">
+                    <div class="timeline-dot"><i class="fas fa-comments"></i></div>
+                    <div class="timeline-card glass-card">
+                        <span class="timeline-date">Maret 2020</span>
+                        <h4 class="timeline-heading">Saling Mengenal</h4>
+                        <p class="timeline-text">Percakapan demi percakapan, kami semakin dekat. Di tengah pandemi,
+                            justru chat dan video call menjadi jembatan yang mempererat hubungan kami.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-aos="fade-right">
+                    <div class="timeline-dot"><i class="fas fa-heart-pulse"></i></div>
+                    <div class="timeline-card glass-card">
+                        <span class="timeline-date">Juni 2020</span>
+                        <h4 class="timeline-heading">Mulai Berpacaran</h4>
+                        <p class="timeline-text">Setelah berbulan-bulan saling mengenal, kami memutuskan untuk menjalani
+                            hubungan yang lebih serius. Hari itu menjadi awal cerita indah kami berdua.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-aos="fade-left">
+                    <div class="timeline-dot"><i class="fas fa-ring"></i></div>
+                    <div class="timeline-card glass-card">
+                        <span class="timeline-date">Desember 2025</span>
+                        <h4 class="timeline-heading">Lamaran</h4>
+                        <p class="timeline-text">Di malam yang penuh bintang, Fauzi memberanikan diri untuk melamar
+                            Firna di tempat pertama kali mereka bertemu. Dan jawabannya… "Ya, aku mau!"</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item" data-aos="fade-right">
+                    <div class="timeline-dot"><i class="fas fa-gem"></i></div>
+                    <div class="timeline-card glass-card">
+                        <span class="timeline-date">Agustus 2026</span>
+                        <h4 class="timeline-heading">Hari Bahagia</h4>
+                        <p class="timeline-text">Kami mengundang Anda untuk menjadi saksi di hari paling bahagia dalam
+                            hidup kami. Semoga cinta ini menjadi rahmat bagi semua.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════ GALERI FOTO ═══════════ -->
+    <section id="gallery" class="gallery-section">
+        <div class="section-container">
+            <div class="section-header" data-aos="fade-up">
+                <p class="section-eyebrow">Momen Bahagia Kami</p>
+                <h2 class="section-title">Galeri Foto</h2>
+                <div class="section-ornament">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+
+            <div class="gallery-grid">
+                <div class="gallery-item gallery-item-tall" data-aos="zoom-in" data-aos-delay="100">
+                    <img src="images/gallery-1.png" alt="Prewedding 1" loading="lazy">
+                    <div class="gallery-hover">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+                <div class="gallery-item" data-aos="zoom-in" data-aos-delay="150">
+                    <img src="images/gallery-2.png" alt="Prewedding 2" loading="lazy">
+                    <div class="gallery-hover">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+                <div class="gallery-item" data-aos="zoom-in" data-aos-delay="200">
+                    <img src="images/gallery-3.png" alt="Prewedding 3" loading="lazy">
+                    <div class="gallery-hover">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+                <div class="gallery-item gallery-item-wide" data-aos="zoom-in" data-aos-delay="250">
+                    <img src="images/gallery-4.png" alt="Prewedding 4" loading="lazy">
+                    <div class="gallery-hover">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+                <div class="gallery-item" data-aos="zoom-in" data-aos-delay="300">
+                    <img src="images/gallery-5.png" alt="Prewedding 5" loading="lazy">
+                    <div class="gallery-hover">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+                <div class="gallery-item" data-aos="zoom-in" data-aos-delay="350">
+                    <img src="images/hero-bg.png" alt="Prewedding 6" loading="lazy">
+                    <div class="gallery-hover">
+                        <i class="fas fa-search-plus"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════ RSVP ═══════════ -->
+    <section id="rsvp" class="rsvp-section">
+        <div class="rsvp-bg"></div>
+        <div class="rsvp-overlay"></div>
+        <div class="section-container">
+            <div class="section-header" data-aos="fade-up">
+                <p class="section-eyebrow">Konfirmasi Kehadiran Anda</p>
+                <h2 class="section-title">RSVP</h2>
+                <div class="section-ornament">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+
+            <form id="rsvp-form" class="rsvp-form glass-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="form-group">
+                    <label for="rsvp-name">Nama Lengkap</label>
+                    <input type="text" id="rsvp-name" name="name" placeholder="Masukkan nama Anda" required>
+                </div>
+                <div class="form-group">
+                    <label for="rsvp-attend">Konfirmasi Kehadiran</label>
+                    <select id="rsvp-attend" name="attendance" required>
+                        <option value="" disabled selected>— Pilih —</option>
+                        <option value="hadir">✓ Hadir</option>
+                        <option value="tidak">✗ Tidak Hadir</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="rsvp-guests">Jumlah Tamu</label>
+                    <input type="number" id="rsvp-guests" name="guests" min="1" max="5" value="1">
+                </div>
+                <div class="form-group">
+                    <label for="rsvp-message">Ucapan & Doa</label>
+                    <textarea id="rsvp-message" name="message" rows="4"
+                        placeholder="Tulis ucapan untuk pengantin..."></textarea>
+                </div>
+                <button type="submit" class="btn-rsvp" id="btn-rsvp">
+                    <i class="fas fa-paper-plane"></i> Kirim RSVP
+                </button>
+            </form>
+
+            <!-- RSVP Success Message -->
+            <div id="rsvp-success" class="rsvp-success" style="display:none;">
+                <i class="fas fa-check-circle"></i>
+                <p>Terima kasih! RSVP Anda telah terkirim.</p>
+            </div>
+
+            <!-- Wishes Wall -->
+            <div class="wishes-wall" data-aos="fade-up" data-aos-delay="300">
+                <h3 class="wishes-title">Ucapan & Doa</h3>
+                <div id="wishes-list" class="wishes-list">
+                    <!-- Wishes will be populated by JS -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════ FOOTER ═══════════ -->
+    <footer class="footer-section">
+        <div class="footer-content" data-aos="fade-up">
+            <p class="footer-thanks">Terima Kasih</p>
+            <h2 class="footer-names">Fauzi & Firna</h2>
+            <div class="footer-divider">
+                <span></span><i class="fas fa-heart"></i><span></span>
+            </div>
+            <p class="footer-verse">
+                "Dan di antara tanda-tanda kekuasaan-Nya ialah Dia menciptakan untukmu pasangan hidup dari jenismu
+                sendiri, supaya kamu merasa tenteram kepadanya, dan dijadikan-Nya di antaramu rasa kasih dan sayang."
+            </p>
+            <p class="footer-quran">— QS. Ar-Rum: 21</p>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Fauzi & Firna Wedding Invitation</p>
+                <p class="footer-made">Made with <i class="fas fa-heart"></i></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ═══════════ LIGHTBOX ═══════════ -->
+    <div id="lightbox" class="lightbox">
+        <button class="lightbox-close" id="lightbox-close" aria-label="Close">&times;</button>
+        <button class="lightbox-nav lightbox-prev" id="lightbox-prev" aria-label="Previous"><i
+                class="fas fa-chevron-left"></i></button>
+        <button class="lightbox-nav lightbox-next" id="lightbox-next" aria-label="Next"><i
+                class="fas fa-chevron-right"></i></button>
+        <div class="lightbox-content">
+            <img id="lightbox-img" src="" alt="Preview">
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
