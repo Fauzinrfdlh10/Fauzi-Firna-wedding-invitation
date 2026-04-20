@@ -138,7 +138,8 @@ button { cursor:pointer; border:none; background:none; font-family:inherit; }
 
 /* ═══════════ SANG MEMPELAI ═══════════ */
 .mempelai-container { width:100%; display:flex; flex-direction:column; }
-.mempelai-fullscreen { position:relative; width:100%; height:100vh; background-size:cover; background-position:center; display:flex; align-items:flex-end; justify-content:center; padding-bottom:80px; }
+.mempelai-fullscreen { position:relative; width:100%; height:100vh; display:flex; align-items:flex-end; justify-content:center; padding-bottom:80px; overflow:hidden; }
+.mempelai-img { position:absolute; inset:0; background-size:cover; background-position:center; }
 .mempelai-overlay { position:absolute; inset:0; background:linear-gradient(180deg, transparent 0%, rgba(12,11,9,0.3) 50%, rgba(12,11,9,0.95) 100%); }
 .mempelai-content { position:relative; z-index:2; text-align:center; padding:0 24px; width:100%; }
 .mempelai-name { font-family:var(--font-serif); font-size:clamp(2.8rem, 8vw, 4.5rem); color:var(--cream); margin-bottom:4px; font-weight:400; text-shadow:0 4px 20px rgba(0,0,0,0.6); line-height:1.2; }
@@ -152,7 +153,7 @@ button { cursor:pointer; border:none; background:none; font-family:inherit; }
 .mempelai-parents-overlay { position:absolute; inset:0; background:linear-gradient(to bottom, var(--bg-primary) 0%, rgba(12,11,9,0.7) 50%, var(--bg-primary) 100%); }
 .parents-grid { display:flex; align-items:center; justify-content:center; gap:20px; flex-wrap:wrap; margin-top:40px; }
 .parent-box { flex:1; min-width:280px; max-width:400px; padding:40px 24px; text-align:center; border-radius:24px; }
-.parent-img-circle { width:120px; height:120px; border-radius:50%; margin:0 auto 20px; border:2px solid var(--gold); overflow:hidden; padding:4px; }
+.parent-img-circle { width:200px; height:200px; border-radius:50%; margin:0 auto 24px; border:3px solid var(--gold); overflow:hidden; padding:6px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
 .parent-img-circle img { width:100%; height:100%; border-radius:50%; object-fit:cover; }
 .parent-box-title { font-size:0.75rem; letter-spacing:2px; text-transform:uppercase; color:var(--gold-light); margin-bottom:12px; }
 .parent-box-names { font-family:var(--font-serif); font-size:1.5rem; color:var(--cream); line-height:1.4; }

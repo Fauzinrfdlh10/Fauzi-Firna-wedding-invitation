@@ -19,7 +19,7 @@
       if (loader) loader.classList.add('hidden');
       // Init AOS after load
       if (typeof AOS !== 'undefined') {
-        AOS.init({ duration: 800, easing: 'ease-out-cubic', once: true, offset: 80 });
+        AOS.init({ duration: 1200, easing: 'ease-out-quart', once: false, mirror: true, offset: 120 });
       }
       createParticles();
     }, 2200);
