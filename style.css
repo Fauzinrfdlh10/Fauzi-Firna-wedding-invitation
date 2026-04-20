@@ -113,8 +113,8 @@ button { cursor:pointer; border:none; background:none; font-family:inherit; }
 .hero-content { position:relative; z-index:2; text-align:center; padding:24px; }
 .hero-ornament-top { color:var(--gold); font-size:1.4rem; margin-bottom:16px; animation:pulse 3s ease-in-out infinite; }
 .hero-subtitle { font-family:var(--font-sans); font-size:.8rem; letter-spacing:6px; text-transform:uppercase; color:var(--gold-light); margin-bottom:16px; font-weight:400; }
-.hero-names { font-family:var(--font-serif); font-size:clamp(3rem,8vw,5.5rem); font-weight:300; color:var(--cream); line-height:1.2; }
-.hero-amp { font-family:var(--font-script); color:var(--gold); font-size:.7em; display:inline-block; margin:0 8px; }
+.hero-names { font-family:var(--font-serif); font-size:clamp(3rem,8vw,5.5rem); font-weight:300; color:var(--cream); line-height:1.2; display:flex; flex-direction:column; align-items:center; }
+.hero-amp { font-family:var(--font-script); color:var(--gold); font-size:.7em; margin:8px 0; }
 .hero-divider { display:flex; align-items:center; justify-content:center; gap:16px; margin:24px 0; }
 .divider-line { display:block; width:60px; height:1px; background:var(--gold); }
 .divider-icon { color:var(--gold); font-size:.7rem; }
@@ -127,6 +127,16 @@ button { cursor:pointer; border:none; background:none; font-family:inherit; }
 @keyframes heroZoom { from { transform:scale(1); } to { transform:scale(1.08); } }
 @keyframes pulse { 0%,100% { opacity:.6; } 50% { opacity:1; } }
 @keyframes scrollBounce { 0%,100% { transform:translateY(0); } 50% { transform:translateY(8px); } }
+
+/* ═══════════ SANG MEMPELAI ═══════════ */
+.mempelai-container { width:100%; display:flex; flex-direction:column; }
+.mempelai-fullscreen { position:relative; width:100%; height:100vh; background-size:cover; background-position:center; display:flex; align-items:flex-end; justify-content:center; padding-bottom:80px; }
+.mempelai-overlay { position:absolute; inset:0; background:linear-gradient(180deg, transparent 0%, rgba(12,11,9,0.3) 50%, rgba(12,11,9,0.95) 100%); }
+.mempelai-content { position:relative; z-index:2; text-align:center; padding:0 24px; width:100%; }
+.mempelai-name { font-family:var(--font-serif); font-size:clamp(2.8rem, 8vw, 4.5rem); color:var(--cream); margin-bottom:4px; font-weight:400; text-shadow:0 4px 20px rgba(0,0,0,0.6); line-height:1.2; }
+.mempelai-role { font-family:var(--font-sans); font-size:0.9rem; letter-spacing:4px; text-transform:uppercase; color:var(--gold-light); margin-bottom:28px; font-weight:400; }
+.mempelai-ig { display:inline-flex; align-items:center; gap:8px; padding:12px 32px; border:1px solid rgba(255,255,255,0.3); border-radius:50px; color:var(--cream); font-size:0.85rem; letter-spacing:1px; transition:var(--transition); background:rgba(0,0,0,0.2); backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px); }
+.mempelai-ig:hover { background:var(--gold); color:var(--bg-primary); border-color:var(--gold); }
 
 /* ═══════════ COUNTDOWN ═══════════ */
 .countdown-section { position:relative; overflow:hidden; }
