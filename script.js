@@ -29,6 +29,7 @@
   // Read guest name from URL param: ?to=Nama+Tamu
   const urlParams = new URLSearchParams(window.location.search);
   const guestParam = urlParams.get('to');
+  const previewMode = urlParams.get('preview');
   if (guestParam) {
     const guestEl = document.getElementById('guest-name');
     if (guestEl) guestEl.textContent = decodeURIComponent(guestParam);
@@ -71,6 +72,17 @@
         if (typeof AOS !== 'undefined') AOS.refresh();
       }, 600);
     });
+  }
+
+  if ((previewMode === 'open' || previewMode === 'gallery') && welcomeCover) {
+    welcomeCover.classList.add('hidden');
+    document.body.style.overflow = '';
+    setTimeout(() => {
+      if (typeof AOS !== 'undefined') AOS.refresh();
+      if (previewMode === 'gallery') {
+        document.getElementById('gallery')?.scrollIntoView({ behavior: 'instant', block: 'start' });
+      }
+    }, 700);
   }
 
   // ─── NAVBAR ────────────────────────────
@@ -262,23 +274,43 @@
   const lightboxClose = document.getElementById('lightbox-close');
   const lightboxPrev = document.getElementById('lightbox-prev');
   const lightboxNext = document.getElementById('lightbox-next');
+  const lightboxCaption = document.getElementById('lightbox-caption');
+  const lightboxCounter = document.getElementById('lightbox-counter');
   const galleryItems = document.querySelectorAll('.gallery-item');
   let currentGalleryIndex = 0;
   const gallerySrcs = [];
+  let lightboxTouchStartX = 0;
+  let lightboxTouchEndX = 0;
 
   galleryItems.forEach((item, index) => {
     const img = item.querySelector('img');
     if (img) {
-      gallerySrcs.push(img.src);
+      gallerySrcs.push({
+        src: img.src,
+        alt: img.alt || `Gallery ${index + 1}`
+      });
+      if (img.complete) item.classList.add('is-loaded');
+      img.addEventListener('load', () => item.classList.add('is-loaded'), { once: true });
       item.addEventListener('click', () => {
         currentGalleryIndex = index;
-        openLightbox(img.src);
+        openLightbox(index);
       });
     }
   });
 
-  function openLightbox(src) {
-    if (lightboxImg) lightboxImg.src = src;
+  function renderLightbox(index) {
+    const currentItem = gallerySrcs[index];
+    if (!currentItem) return;
+    if (lightboxImg) {
+      lightboxImg.src = currentItem.src;
+      lightboxImg.alt = currentItem.alt;
+    }
+    if (lightboxCaption) lightboxCaption.textContent = currentItem.alt;
+    if (lightboxCounter) lightboxCounter.textContent = `${index + 1} / ${gallerySrcs.length}`;
+  }
+
+  function openLightbox(index) {
+    renderLightbox(index);
     if (lightbox) lightbox.classList.add('active');
     document.body.style.overflow = 'hidden';
   }
@@ -297,7 +329,7 @@
     lightboxPrev.addEventListener('click', (e) => {
       e.stopPropagation();
       currentGalleryIndex = (currentGalleryIndex - 1 + gallerySrcs.length) % gallerySrcs.length;
-      if (lightboxImg) lightboxImg.src = gallerySrcs[currentGalleryIndex];
+      renderLightbox(currentGalleryIndex);
     });
   }
 
@@ -305,17 +337,131 @@
     lightboxNext.addEventListener('click', (e) => {
       e.stopPropagation();
       currentGalleryIndex = (currentGalleryIndex + 1) % gallerySrcs.length;
-      if (lightboxImg) lightboxImg.src = gallerySrcs[currentGalleryIndex];
+      renderLightbox(currentGalleryIndex);
     });
+  }
+
+  if (lightbox) {
+    lightbox.addEventListener('touchstart', (e) => {
+      lightboxTouchStartX = e.changedTouches[0].clientX;
+    }, { passive: true });
+
+    lightbox.addEventListener('touchend', (e) => {
+      lightboxTouchEndX = e.changedTouches[0].clientX;
+      const deltaX = lightboxTouchEndX - lightboxTouchStartX;
+      if (Math.abs(deltaX) < 40) return;
+      if (deltaX > 0 && lightboxPrev) lightboxPrev.click();
+      if (deltaX < 0 && lightboxNext) lightboxNext.click();
+    }, { passive: true });
   }
 
   // Keyboard navigation for lightbox
   document.addEventListener('keydown', (e) => {
+    if (videoModal && videoModal.classList.contains('active') && e.key === 'Escape') {
+      closeVideoModal();
+    }
     if (!lightbox || !lightbox.classList.contains('active')) return;
     if (e.key === 'Escape') closeLightbox();
     if (e.key === 'ArrowLeft' && lightboxPrev) lightboxPrev.click();
     if (e.key === 'ArrowRight' && lightboxNext) lightboxNext.click();
   });
+
+  // ─── PREWEDDING VIDEO MODAL ─────────────────────────────
+  const videoModal = document.getElementById('video-modal');
+  const videoModalBody = document.getElementById('video-modal-body');
+  const videoModalTitle = document.getElementById('video-modal-title');
+  const videoModalClose = document.getElementById('video-modal-close');
+  const cinemaCards = document.querySelectorAll('.cinema-card');
+
+  function normalizeYoutubeUrl(url) {
+    if (!url) return '';
+    if (url.includes('/embed/')) return url;
+
+    try {
+      const parsedUrl = new URL(url);
+      if (parsedUrl.hostname.includes('youtu.be')) {
+        const videoId = parsedUrl.pathname.replace('/', '');
+        return `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`;
+      }
+      const videoId = parsedUrl.searchParams.get('v');
+      if (videoId) {
+        return `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0&modestbranding=1`;
+      }
+    } catch (error) {
+      return url;
+    }
+
+    return url;
+  }
+
+  function openVideoModal({ title, type, src }) {
+    if (!videoModal || !videoModalBody || !videoModalTitle) return;
+    videoModalTitle.textContent = title || 'Prewedding Video';
+
+    if (!src) {
+      videoModalBody.innerHTML = `
+        <div class="video-empty-state">
+          <div>
+            <strong>Video siap dipasang</strong>
+            Tempel URL YouTube atau path file MP4 lokal pada atribut <code>data-video-src</code> di kartu ini,
+            lalu modal akan langsung memutar video secara otomatis.
+          </div>
+        </div>
+      `;
+    } else if (type === 'mp4') {
+      videoModalBody.innerHTML = `
+        <div class="video-embed-shell">
+          <video controls autoplay playsinline preload="metadata">
+            <source src="${src}" type="video/mp4">
+          </video>
+        </div>
+      `;
+    } else {
+      const embedUrl = normalizeYoutubeUrl(src);
+      videoModalBody.innerHTML = `
+        <div class="video-embed-shell">
+          <iframe
+            src="${embedUrl}"
+            title="${title || 'Prewedding Video'}"
+            loading="lazy"
+            allow="autoplay; encrypted-media; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+        </div>
+      `;
+    }
+
+    videoModal.classList.add('active');
+    videoModal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeVideoModal() {
+    if (!videoModal || !videoModalBody) return;
+    videoModal.classList.remove('active');
+    videoModal.setAttribute('aria-hidden', 'true');
+    videoModalBody.innerHTML = '';
+    document.body.style.overflow = '';
+  }
+
+  cinemaCards.forEach((card) => {
+    card.addEventListener('click', () => {
+      openVideoModal({
+        title: card.dataset.videoTitle,
+        type: card.dataset.videoType,
+        src: card.dataset.videoSrc
+      });
+    });
+  });
+
+  if (videoModalClose) videoModalClose.addEventListener('click', closeVideoModal);
+  if (videoModal) {
+    videoModal.addEventListener('click', (e) => {
+      if (e.target === videoModal || e.target.classList.contains('video-modal-backdrop')) {
+        closeVideoModal();
+      }
+    });
+  }
 
   // ─── RSVP FORM (BACKEND API) ────────────
   const rsvpForm = document.getElementById('rsvp-form');
@@ -465,6 +611,18 @@
         rsvpBg.style.transform = `scale(1.1) translateY(${relativeScroll * 0.15}px)`;
       }
     }
+
+    // Gallery and cinema parallax
+    document.querySelectorAll('.gallery-item-frame, .cinema-card').forEach((element) => {
+      const rect = element.getBoundingClientRect();
+      const viewportCenter = window.innerHeight / 2;
+      if (rect.bottom > 0 && rect.top < window.innerHeight) {
+        const offset = (rect.top + rect.height / 2 - viewportCenter) * -0.012;
+        element.style.setProperty('--parallax-offset', `${offset}px`);
+      } else {
+        element.style.setProperty('--parallax-offset', '0px');
+      }
+    });
   });
 
   // ─── SMOOTH REVEAL ON SCROLL ──────────
@@ -477,8 +635,18 @@
     });
   }, observerOptions);
 
-  document.querySelectorAll('.glass-card, .event-card, .gift-card, .parent-box').forEach(el => {
+  document.querySelectorAll('.glass-card, .event-card, .gift-card, .parent-box, .reveal-luxury').forEach(el => {
     revealObserver.observe(el);
+  });
+
+  document.querySelectorAll('img[loading="lazy"]').forEach((img) => {
+    if (img.complete) {
+      img.closest('.gallery-item')?.classList.add('is-loaded');
+      return;
+    }
+    img.addEventListener('load', () => {
+      img.closest('.gallery-item')?.classList.add('is-loaded');
+    }, { once: true });
   });
 
   // ─── COPY TO CLIPBOARD (GIFT) ─────────
