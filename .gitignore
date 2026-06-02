@@ -1,9 +1,4 @@
-# Dependencies
-.psci_modules
-.spago
-bower_components
-node_modules
-
-# Generated files
-.psci
-output
+node_modules/
+.env
+uploads/
+package-lock.json

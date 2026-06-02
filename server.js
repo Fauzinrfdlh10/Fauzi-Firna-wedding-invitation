@@ -7,7 +7,7 @@ const QRCode = require('qrcode');
 const { initDatabase, getPool } = require('./db');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 const UPLOADS_DIR = path.join(__dirname, 'uploads');
 const PHOTOS_DIR = path.join(UPLOADS_DIR, 'photos');
