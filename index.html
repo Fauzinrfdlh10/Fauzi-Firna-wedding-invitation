@@ -649,10 +649,32 @@
                 </div>
             </div>
 
+            <div id="guest-pass" class="guest-pass glass-card" style="display:none;" data-aos="fade-up" data-aos-delay="120">
+                <div class="guest-pass-copy">
+                    <p class="guest-pass-label">Private Guest Access</p>
+                    <h3 id="guest-pass-name" class="guest-pass-name">Tamu Undangan</h3>
+                    <p id="guest-pass-meta" class="guest-pass-meta">Undangan personal Anda telah diaktifkan.</p>
+                </div>
+                <div class="guest-pass-side">
+                    <span class="guest-pass-pill"><i class="fas fa-lock"></i> Link Personal</span>
+                    <span class="guest-pass-pill"><i class="fas fa-users"></i> <span id="guest-pass-quota">1 Tamu</span></span>
+                </div>
+            </div>
+
             <form id="rsvp-form" class="rsvp-form glass-card" data-aos="fade-up" data-aos-delay="200">
                 <div class="form-group">
                     <label for="rsvp-name">Nama Lengkap</label>
                     <input type="text" id="rsvp-name" name="name" placeholder="Masukkan nama Anda" required>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="rsvp-phone">No. WhatsApp</label>
+                        <input type="tel" id="rsvp-phone" name="phone" placeholder="08xxxxxxxxxx">
+                    </div>
+                    <div class="form-group">
+                        <label for="rsvp-relation">Kategori Tamu</label>
+                        <input type="text" id="rsvp-relation" name="relation" placeholder="Keluarga / Sahabat / Rekan">
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="rsvp-attend">Konfirmasi Kehadiran</label>
@@ -665,6 +687,16 @@
                 <div class="form-group">
                     <label for="rsvp-guests">Jumlah Tamu</label>
                     <input type="number" id="rsvp-guests" name="guests" min="1" max="5" value="1">
+                </div>
+                <div class="form-group">
+                    <label for="rsvp-meal">Preferensi Kehadiran</label>
+                    <select id="rsvp-meal" name="mealPreference">
+                        <option value="" selected>â€” Pilih Opsi â€”</option>
+                        <option value="Regular">Regular</option>
+                        <option value="Vegetarian">Vegetarian</option>
+                        <option value="Datang Saat Akad">Datang Saat Akad</option>
+                        <option value="Datang Saat Resepsi">Datang Saat Resepsi</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="rsvp-message">Ucapan & Doa</label>
@@ -682,9 +714,26 @@
                 <p>Terima kasih! RSVP Anda telah terkirim.</p>
             </div>
 
+            <div id="guest-qr-card" class="guest-qr-card glass-card" style="display:none;" data-aos="fade-up" data-aos-delay="240">
+                <div class="guest-qr-copy">
+                    <p class="guest-pass-label">Guest Check-In Pass</p>
+                    <h3 class="guest-pass-name">QR Check-In Tamu</h3>
+                    <p class="guest-pass-meta">Simpan QR ini untuk memudahkan proses check-in saat hari acara.</p>
+                </div>
+                <div class="guest-qr-visual">
+                    <img id="guest-qr-image" src="" alt="QR Check-In">
+                </div>
+            </div>
+
             <!-- Wishes Wall -->
-            <div class="wishes-wall" data-aos="fade-up" data-aos-delay="300">
-                <h3 class="wishes-title">Ucapan & Doa</h3>
+            <div class="wishes-wall guestbook-wall" data-aos="fade-up" data-aos-delay="300">
+                <div class="guestbook-head">
+                    <div>
+                        <p class="section-eyebrow" style="margin-bottom:8px;">Digital Guestbook</p>
+                        <h3 class="wishes-title">Ucapan & Doa</h3>
+                    </div>
+                    <span class="guestbook-pill"><i class="fas fa-feather-pointed"></i> Premium Wishes</span>
+                </div>
                 <div id="wishes-list" class="wishes-list">
                     <!-- Wishes will be populated by JS -->
                 </div>
@@ -693,6 +742,61 @@
     </section>
 
     <!-- ═══════════ FOOTER ═══════════ -->
+    <section id="photo-wall" class="photo-wall-section">
+        <div class="section-container">
+            <div class="section-header">
+                <p class="section-eyebrow" data-aos="fade-down" data-aos-delay="100">Shared Wedding Moments</p>
+                <h2 class="section-title" data-aos="fade-up" data-aos-delay="200">Live Guest Photo Wall</h2>
+                <div class="section-ornament" data-aos="zoom-in" data-aos-delay="300">
+                    <span></span><span></span><span></span>
+                </div>
+                <p class="section-intro" data-aos="fade-up" data-aos-delay="400">
+                    Ruang bersama untuk mengabadikan momen hangat dari para tamu, keluarga, dan sahabat terdekat kami.
+                </p>
+            </div>
+
+            <div class="photo-wall-layout">
+                <form id="photo-upload-form" class="photo-upload-card glass-card reveal-luxury">
+                    <p class="guest-pass-label">Upload Your Moment</p>
+                    <h3 class="guest-pass-name">Bagikan Foto Terbaik Anda</h3>
+                    <p class="guest-pass-meta">Unggah potret paling hangat dari hari spesial kami untuk tampil di galeri tamu.</p>
+
+                    <div class="form-group">
+                        <label for="photo-guest-name">Nama Pengunggah</label>
+                        <input type="text" id="photo-guest-name" name="guestName" placeholder="Nama Anda">
+                    </div>
+                    <div class="form-group">
+                        <label for="photo-caption">Caption Singkat</label>
+                        <textarea id="photo-caption" name="caption" rows="3" placeholder="Tuliskan momen atau kesan singkat..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="photo-file">Pilih Foto</label>
+                        <input type="file" id="photo-file" name="photo" accept="image/png,image/jpeg,image/webp" required>
+                    </div>
+                    <div id="photo-preview" class="photo-preview" style="display:none;">
+                        <img id="photo-preview-image" src="" alt="Preview Foto">
+                    </div>
+                    <button type="submit" class="btn-rsvp">
+                        <i class="fas fa-cloud-arrow-up"></i> Upload ke Photo Wall
+                    </button>
+                    <p id="photo-upload-feedback" class="photo-upload-feedback"></p>
+                </form>
+
+                <div class="photo-wall-feed reveal-luxury">
+                    <div class="photo-wall-headline">
+                        <p class="section-eyebrow" style="margin-bottom:8px;">Live Wedding Gallery</p>
+                        <h3 class="wishes-title">Captured by Our Guests</h3>
+                    </div>
+                    <div id="photo-wall-grid" class="photo-wall-grid"></div>
+                    <div id="photo-wall-empty" class="photo-wall-empty" style="display:none;">
+                        <i class="fas fa-camera-retro"></i>
+                        <p>Belum ada foto tamu yang ditampilkan.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <footer class="footer-section">
         <div class="footer-content" data-aos="fade-up">
             <p class="footer-thanks">Terima Kasih</p>

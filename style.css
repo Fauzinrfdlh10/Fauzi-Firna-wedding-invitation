@@ -651,6 +651,67 @@ button { cursor:pointer; border:none; background:none; font-family:inherit; }
 }
 .rsvp-overlay { position:absolute; inset:0; background:linear-gradient(180deg, var(--bg-primary) 0%, rgba(12,11,9,0.85) 50%, var(--bg-primary) 100%); }
 .rsvp-form { max-width:700px; margin:0 auto 40px; padding:40px 32px; border: 1px solid rgba(200,169,97,0.3); }
+.form-grid { display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:18px; }
+.guest-pass,
+.guest-qr-card {
+  max-width:700px;
+  margin:0 auto 24px;
+  padding:24px 26px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+  border:1px solid rgba(200,169,97,.2);
+  background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+}
+.guest-pass-label {
+  font-size:.74rem;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:8px;
+}
+.guest-pass-name {
+  font-family:var(--font-serif);
+  font-size:1.9rem;
+  font-weight:400;
+  color:var(--cream);
+  margin-bottom:8px;
+}
+.guest-pass-meta {
+  color:rgba(245,239,230,.72);
+  line-height:1.8;
+}
+.guest-pass-side {
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+  gap:10px;
+}
+.guest-pass-pill {
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:10px 16px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(255,255,255,.06);
+  color:var(--cream);
+  font-size:.78rem;
+}
+.guest-qr-visual {
+  width:126px;
+  height:126px;
+  padding:10px;
+  border-radius:24px;
+  background:#0d0c0a;
+  border:1px solid rgba(255,255,255,.08);
+}
+.guest-qr-visual img {
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
 
 /* Form Elements */
 .form-group { margin-bottom: 20px; text-align: left; }
@@ -718,13 +779,136 @@ button { cursor:pointer; border:none; background:none; font-family:inherit; }
 .rsvp-success p { font-family:var(--font-serif); font-size:1.2rem; color:var(--cream); }
 
 /* Wishes */
-.wishes-wall { max-width:600px; margin:0 auto; }
+.wishes-wall { max-width:760px; margin:0 auto; }
+.guestbook-wall {
+  padding:28px;
+  border-radius:28px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+}
+.guestbook-head {
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:16px;
+  margin-bottom:20px;
+}
+.guestbook-pill {
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:10px 16px;
+  border-radius:999px;
+  font-size:.74rem;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--cream);
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.1);
+}
 .wishes-title { font-family:var(--font-serif); font-size:1.4rem; color:var(--cream); text-align:center; margin-bottom:24px; }
-.wishes-list { display:flex; flex-direction:column; gap:12px; max-height:400px; overflow-y:auto; padding-right:8px; }
-.wish-card { padding:16px 20px; border-radius:12px; background:rgba(255,255,255,.04); border:1px solid rgba(200,169,97,.08); }
-.wish-name { font-size:.82rem; font-weight:600; color:var(--gold); margin-bottom:4px; }
-.wish-text { font-size:.85rem; color:var(--text-muted); line-height:1.6; }
-.wish-time { font-size:.7rem; color:var(--text-muted); opacity:.6; margin-top:6px; }
+.wishes-list { display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:14px; max-height:560px; overflow-y:auto; padding-right:8px; }
+.wish-card {
+  padding:18px 20px;
+  border-radius:18px;
+  background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.03));
+  border:1px solid rgba(200,169,97,.12);
+  box-shadow:0 14px 40px rgba(0,0,0,.14);
+}
+.wish-name { font-size:.84rem; font-weight:600; color:var(--gold); margin-bottom:8px; }
+.wish-text { font-size:.88rem; color:var(--text-muted); line-height:1.8; }
+.wish-time { font-size:.72rem; color:var(--text-muted); opacity:.65; margin-top:10px; }
+
+/* ═══════════ PHOTO WALL ═══════════ */
+.photo-wall-section {
+  background:
+    radial-gradient(circle at top, rgba(200,169,97,.08), transparent 30%),
+    linear-gradient(180deg, rgba(255,255,255,.015), transparent 20%),
+    var(--bg-section);
+}
+.photo-wall-layout {
+  display:grid;
+  grid-template-columns:minmax(320px, 390px) minmax(0, 1fr);
+  gap:28px;
+  align-items:start;
+}
+.photo-upload-card,
+.photo-wall-feed {
+  padding:28px;
+  border-radius:30px;
+  border:1px solid rgba(255,255,255,.1);
+  background:rgba(255,255,255,.04);
+}
+.photo-preview {
+  margin:6px 0 18px;
+  border-radius:22px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.08);
+}
+.photo-preview img {
+  width:100%;
+  aspect-ratio:4 / 3;
+  object-fit:cover;
+}
+.photo-upload-feedback {
+  margin-top:14px;
+  font-size:.84rem;
+  color:rgba(245,239,230,.72);
+}
+.photo-wall-headline {
+  margin-bottom:18px;
+}
+.photo-wall-grid {
+  column-count:3;
+  column-gap:16px;
+}
+.photo-wall-item {
+  display:inline-block;
+  width:100%;
+  margin-bottom:16px;
+  padding:12px;
+  border-radius:22px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:0 16px 40px rgba(0,0,0,.16);
+}
+.photo-wall-item img {
+  width:100%;
+  border-radius:16px;
+  margin-bottom:12px;
+  object-fit:cover;
+}
+.photo-wall-item strong {
+  display:block;
+  color:var(--cream);
+  font-size:.88rem;
+  margin-bottom:6px;
+}
+.photo-wall-item p {
+  color:var(--text-muted);
+  font-size:.82rem;
+  line-height:1.7;
+}
+.photo-wall-item span {
+  display:block;
+  margin-top:8px;
+  color:rgba(245,239,230,.5);
+  font-size:.72rem;
+}
+.photo-wall-empty {
+  text-align:center;
+  padding:50px 20px;
+  color:var(--text-muted);
+}
+.photo-wall-empty i {
+  display:block;
+  margin-bottom:14px;
+  color:var(--gold);
+  opacity:.5;
+  font-size:2.1rem;
+}
 
 /* ═══════════ FOOTER ═══════════ */
 .footer-section { background:var(--bg-primary); padding:80px 24px 40px; text-align:center; }
@@ -924,6 +1108,17 @@ button { cursor:pointer; border:none; background:none; font-family:inherit; }
   .events-grid { grid-template-columns:1fr; }
   .section-container { padding:70px 16px; }
   .hero-names { font-size:clamp(2.5rem,10vw,4rem); }
+  .form-grid,
+  .photo-wall-layout,
+  .wishes-list { grid-template-columns:1fr; }
+  .guest-pass,
+  .guest-qr-card,
+  .guestbook-head {
+    flex-direction:column;
+    align-items:flex-start;
+  }
+  .guest-pass-side { justify-content:flex-start; }
+  .photo-wall-grid { column-count:2; }
   .lightbox-content {
     width:min(94vw, 94vw);
     padding:14px;
@@ -953,6 +1148,12 @@ button { cursor:pointer; border:none; background:none; font-family:inherit; }
   .cinema-card { min-height:320px; padding:20px; border-radius:24px; }
   .cinema-card-meta { right:20px; bottom:20px; left:20px; }
   .cinema-play { top:20px; right:20px; width:60px; height:60px; }
+  .guest-pass-name { font-size:1.55rem; }
+  .guest-qr-visual { width:108px; height:108px; }
+  .guestbook-wall,
+  .photo-upload-card,
+  .photo-wall-feed { padding:20px; border-radius:24px; }
+  .photo-wall-grid { column-count:1; }
   .countdown-card { min-width:60px; padding:14px 10px; }
   .countdown-number { font-size:2rem; }
   .rsvp-form { padding:28px 20px; }

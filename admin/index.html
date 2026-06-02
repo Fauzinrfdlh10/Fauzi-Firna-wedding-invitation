@@ -3,284 +3,691 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin — RSVP Fauzi & Firna</title>
+  <title>Admin - Premium Wedding Dashboard</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <style>
     :root {
-      --bg: #0f0f0f; --bg-card: #1a1a1a; --bg-hover: #222;
-      --gold: #C8A961; --gold-light: #D4B96E;
-      --text: #e8e0d4; --text-muted: #888;
-      --green: #4ade80; --red: #f87171; --blue: #60a5fa;
-      --radius: 14px;
+      --bg: #0c0b09;
+      --bg-card: rgba(26, 24, 22, 0.88);
+      --bg-soft: rgba(255, 255, 255, 0.04);
+      --gold: #c8a961;
+      --gold-light: #d4b96e;
+      --cream: #f5efe6;
+      --text: #e8e0d4;
+      --muted: #988d84;
+      --green: #6dd8a7;
+      --red: #f48f8f;
+      --blue: #8ab8ff;
+      --radius: 22px;
+      --border: rgba(255,255,255,.08);
+      --shadow: 0 25px 70px rgba(0,0,0,.28);
     }
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body { font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; }
-
-    /* ── Header ── */
-    .header { background:var(--bg-card); border-bottom:1px solid rgba(200,169,97,.15); padding:20px 32px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
-    .header h1 { font-size:1.3rem; font-weight:600; }
-    .header h1 i { color:var(--gold); margin-right:8px; }
-    .header a { color:var(--gold); font-size:.85rem; text-decoration:none; display:flex; align-items:center; gap:6px; }
-    .header a:hover { text-decoration:underline; }
-
-    /* ── Stats ── */
-    .stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:16px; padding:24px 32px; }
-    .stat-card { background:var(--bg-card); border:1px solid rgba(255,255,255,.06); border-radius:var(--radius); padding:24px; text-align:center; }
-    .stat-number { font-size:2.2rem; font-weight:700; color:var(--gold); display:block; }
-    .stat-label { font-size:.78rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:1.5px; margin-top:4px; }
-
-    /* ── Tabs ── */
-    .tabs { display:flex; gap:0; padding:0 32px; border-bottom:1px solid rgba(255,255,255,.06); }
-    .tab { padding:14px 24px; font-size:.85rem; font-weight:500; color:var(--text-muted); cursor:pointer; border-bottom:2px solid transparent; transition:.3s; }
-    .tab:hover { color:var(--text); }
-    .tab.active { color:var(--gold); border-bottom-color:var(--gold); }
-
-    /* ── Content ── */
-    .content { padding:24px 32px; }
-    .tab-content { display:none; }
-    .tab-content.active { display:block; }
-
-    /* ── Table ── */
-    .table-wrap { overflow-x:auto; border-radius:var(--radius); border:1px solid rgba(255,255,255,.06); }
-    table { width:100%; border-collapse:collapse; font-size:.85rem; }
-    th { background:rgba(200,169,97,.08); text-align:left; padding:14px 16px; font-weight:600; font-size:.75rem; text-transform:uppercase; letter-spacing:1px; color:var(--gold); white-space:nowrap; }
-    td { padding:12px 16px; border-top:1px solid rgba(255,255,255,.04); vertical-align:top; }
-    tr:hover td { background:var(--bg-hover); }
-    .badge { padding:4px 10px; border-radius:20px; font-size:.72rem; font-weight:600; text-transform:uppercase; letter-spacing:.5px; }
-    .badge-hadir { background:rgba(74,222,128,.12); color:var(--green); }
-    .badge-tidak { background:rgba(248,113,113,.12); color:var(--red); }
-    .badge-approved { background:rgba(96,165,250,.12); color:var(--blue); }
-    .badge-hidden { background:rgba(255,255,255,.06); color:var(--text-muted); }
-
-    /* ── Buttons ── */
-    .btn { padding:6px 14px; border-radius:8px; font-size:.75rem; font-weight:500; border:none; cursor:pointer; transition:.3s; display:inline-flex; align-items:center; gap:6px; }
-    .btn-approve { background:rgba(96,165,250,.15); color:var(--blue); }
-    .btn-approve:hover { background:rgba(96,165,250,.3); }
-    .btn-hide { background:rgba(248,113,113,.1); color:var(--red); }
-    .btn-hide:hover { background:rgba(248,113,113,.25); }
-    .btn-delete { background:rgba(248,113,113,.08); color:var(--red); }
-    .btn-delete:hover { background:rgba(248,113,113,.2); }
-    .btn-group { display:flex; gap:6px; flex-wrap:wrap; }
-
-    .msg-text { max-width:300px; line-height:1.5; color:var(--text-muted); }
-    .empty { text-align:center; padding:60px 20px; color:var(--text-muted); }
-    .empty i { font-size:2.5rem; margin-bottom:12px; display:block; color:var(--gold); opacity:.4; }
-    .time { font-size:.75rem; color:var(--text-muted); white-space:nowrap; }
-
-    /* ── Wishes Cards (tab 2) ── */
-    .wishes-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:16px; }
-    .wish-card { background:var(--bg-card); border:1px solid rgba(255,255,255,.06); border-radius:var(--radius); padding:20px; position:relative; transition:.3s; }
-    .wish-card:hover { border-color:rgba(200,169,97,.2); }
-    .wish-card.approved { border-left:3px solid var(--blue); }
-    .wish-card.hidden { opacity:.5; }
-    .wish-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px; }
-    .wish-name { font-weight:600; font-size:.9rem; }
-    .wish-msg { color:var(--text-muted); font-size:.88rem; line-height:1.6; margin-bottom:12px; }
-    .wish-footer { display:flex; justify-content:space-between; align-items:center; }
-
-    @media(max-width:768px) {
-      .stats { grid-template-columns:repeat(2,1fr); padding:16px; }
-      .content { padding:16px; }
-      .header { padding:16px; }
-      .tabs { padding:0 16px; overflow-x:auto; }
-      .tab { padding:12px 16px; white-space:nowrap; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top, rgba(200,169,97,.08), transparent 32%),
+        linear-gradient(180deg, #0c0b09, #141210 35%, #100f0d);
+    }
+    a { color: inherit; text-decoration: none; }
+    button, input, select, textarea { font: inherit; }
+    .page {
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 28px;
+    }
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 26px 28px;
+      border-radius: 28px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      margin-bottom: 24px;
+    }
+    .topbar h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.4rem;
+      font-weight: 500;
+      color: var(--cream);
+    }
+    .topbar p {
+      color: var(--muted);
+      margin-top: 6px;
+    }
+    .topbar a {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      color: var(--gold-light);
+    }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+    .stat-card {
+      padding: 24px;
+      border-radius: var(--radius);
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+    .stat-label {
+      font-size: .76rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .stat-number {
+      display: block;
+      margin-top: 14px;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--gold);
+    }
+    .tabs {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+    .tab {
+      padding: 12px 18px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.06);
+      color: var(--muted);
+      cursor: pointer;
+      transition: .25s ease;
+    }
+    .tab.active {
+      color: #1a1816;
+      background: linear-gradient(135deg, var(--gold-light), var(--gold));
+      border-color: transparent;
+      font-weight: 600;
+    }
+    .panel {
+      display: none;
+      padding: 24px;
+      border-radius: 30px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+    .panel.active { display: block; }
+    .panel h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      font-weight: 500;
+      color: var(--cream);
+    }
+    .panel-subtitle {
+      color: var(--muted);
+      margin-top: 6px;
+      margin-bottom: 22px;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 380px minmax(0, 1fr);
+      gap: 24px;
+    }
+    .card {
+      padding: 22px;
+      border-radius: 24px;
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.06);
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .field { margin-bottom: 14px; }
+    .field label {
+      display: block;
+      font-size: .8rem;
+      color: var(--gold-light);
+      margin-bottom: 8px;
+      letter-spacing: 1px;
+    }
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      padding: 13px 14px;
+      border-radius: 14px;
+      background: rgba(12,11,9,.68);
+      border: 1px solid rgba(255,255,255,.08);
+      color: var(--cream);
+    }
+    .field textarea { resize: vertical; min-height: 92px; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 11px 16px;
+      border: 0;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: .25s ease;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--gold-light), var(--gold));
+      color: #16130f;
+      font-weight: 600;
+      box-shadow: 0 14px 30px rgba(200,169,97,.22);
+    }
+    .btn-soft {
+      background: rgba(255,255,255,.05);
+      color: var(--cream);
+      border: 1px solid rgba(255,255,255,.08);
+    }
+    .btn-danger {
+      background: rgba(244,143,143,.1);
+      color: var(--red);
+      border: 1px solid rgba(244,143,143,.2);
+    }
+    .table-wrap {
+      overflow: auto;
+      border-radius: 24px;
+      border: 1px solid rgba(255,255,255,.06);
+      background: rgba(12,11,9,.35);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 880px;
+    }
+    th, td {
+      padding: 15px 16px;
+      border-bottom: 1px solid rgba(255,255,255,.05);
+      vertical-align: top;
+      text-align: left;
+    }
+    th {
+      position: sticky;
+      top: 0;
+      background: rgba(28,24,20,.95);
+      font-size: .72rem;
+      color: var(--gold-light);
+      text-transform: uppercase;
+      letter-spacing: 1.4px;
+    }
+    tr:hover td { background: rgba(255,255,255,.02); }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: .6px;
+      text-transform: uppercase;
+    }
+    .badge-green { background: rgba(109,216,167,.12); color: var(--green); }
+    .badge-red { background: rgba(244,143,143,.12); color: var(--red); }
+    .badge-blue { background: rgba(138,184,255,.12); color: var(--blue); }
+    .badge-gold { background: rgba(200,169,97,.12); color: var(--gold-light); }
+    .stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .list-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+    .mini-card {
+      padding: 18px;
+      border-radius: 22px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.06);
+    }
+    .mini-card h3 {
+      font-size: .94rem;
+      margin-bottom: 10px;
+      color: var(--cream);
+    }
+    .muted { color: var(--muted); }
+    .mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: .78rem;
+      word-break: break-all;
+    }
+    .qr-thumb {
+      width: 88px;
+      height: 88px;
+      padding: 8px;
+      border-radius: 18px;
+      background: #0c0b09;
+      border: 1px solid rgba(255,255,255,.08);
+    }
+    .qr-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .photo-card img {
+      width: 100%;
+      border-radius: 18px;
+      margin-bottom: 12px;
+    }
+    .empty {
+      text-align: center;
+      padding: 44px 20px;
+      color: var(--muted);
+    }
+    @media (max-width: 1180px) {
+      .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .grid-2 { grid-template-columns: 1fr; }
+      .list-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 720px) {
+      .page { padding: 14px; }
+      .topbar { flex-direction: column; align-items: flex-start; }
+      .stats { grid-template-columns: 1fr; }
+      .form-row,
+      .list-grid { grid-template-columns: 1fr; }
+      .panel { padding: 18px; }
+      table { min-width: 720px; }
     }
   </style>
 </head>
 <body>
-
-  <!-- Header -->
-  <div class="header">
-    <h1><i class="fas fa-ring"></i> Admin Panel — RSVP</h1>
-    <a href="/"><i class="fas fa-arrow-left"></i> Kembali ke Undangan</a>
-  </div>
-
-  <!-- Stats -->
-  <div class="stats" id="stats">
-    <div class="stat-card">
-      <span class="stat-number" id="stat-total">0</span>
-      <span class="stat-label">Total RSVP</span>
+  <div class="page">
+    <div class="topbar">
+      <div>
+        <h1>Premium Wedding Dashboard</h1>
+        <p>Kelola guest link personal, QR check-in, RSVP pintar, guestbook, photo wall, dan analytics.</p>
+      </div>
+      <a href="/"><i class="fas fa-arrow-left"></i> Kembali ke Undangan</a>
     </div>
-    <div class="stat-card">
-      <span class="stat-number" id="stat-hadir" style="color:var(--green)">0</span>
-      <span class="stat-label">Hadir</span>
-    </div>
-    <div class="stat-card">
-      <span class="stat-number" id="stat-tidak" style="color:var(--red)">0</span>
-      <span class="stat-label">Tidak Hadir</span>
-    </div>
-    <div class="stat-card">
-      <span class="stat-number" id="stat-tamu">0</span>
-      <span class="stat-label">Total Tamu</span>
-    </div>
-    <div class="stat-card">
-      <span class="stat-number" id="stat-wishes" style="color:var(--blue)">0</span>
-      <span class="stat-label">Ucapan Ditampilkan</span>
-    </div>
-  </div>
 
-  <!-- Tabs -->
-  <div class="tabs">
-    <div class="tab active" data-tab="rsvp-list"><i class="fas fa-list"></i>&nbsp; Daftar RSVP</div>
-    <div class="tab" data-tab="wishes-manage"><i class="fas fa-comment-dots"></i>&nbsp; Kelola Ucapan</div>
-  </div>
+    <div class="stats" id="stats-grid"></div>
 
-  <!-- Content -->
-  <div class="content">
+    <div class="tabs">
+      <button class="tab active" data-tab="overview">Overview</button>
+      <button class="tab" data-tab="guests">Guests</button>
+      <button class="tab" data-tab="rsvp">RSVP</button>
+      <button class="tab" data-tab="guestbook">Guestbook</button>
+      <button class="tab" data-tab="photos">Photo Wall</button>
+    </div>
 
-    <!-- Tab 1: RSVP List -->
-    <div class="tab-content active" id="rsvp-list">
+    <section class="panel active" id="panel-overview">
+      <h2>Business Overview</h2>
+      <p class="panel-subtitle">Ringkasan performa undangan, aktivitas tamu, dan sinyal konversi.</p>
+      <div class="grid-2">
+        <div class="card">
+          <h3 style="margin-bottom:14px;">Recent Activity</h3>
+          <div id="recent-events" class="muted"></div>
+        </div>
+        <div class="card">
+          <h3 style="margin-bottom:14px;">Top Guest Engagement</h3>
+          <div id="guest-performance" class="list-grid"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" id="panel-guests">
+      <h2>Guest Link Personal + QR Check-In</h2>
+      <p class="panel-subtitle">Tambahkan tamu, generate link personal, dan siapkan QR check-in untuk hari acara.</p>
+      <div class="grid-2">
+        <div class="card">
+          <h3 style="margin-bottom:14px;">Tambah Tamu Baru</h3>
+          <form id="guest-form">
+            <div class="field">
+              <label for="guest-name">Nama Tamu</label>
+              <input id="guest-name" type="text" required>
+            </div>
+            <div class="form-row">
+              <div class="field">
+                <label for="guest-phone">No. WhatsApp</label>
+                <input id="guest-phone" type="text">
+              </div>
+              <div class="field">
+                <label for="guest-max">Kuota Tamu</label>
+                <input id="guest-max" type="number" min="1" value="1">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="field">
+                <label for="guest-category">Kategori</label>
+                <input id="guest-category" type="text" placeholder="Keluarga / Sahabat / Rekan">
+              </div>
+              <div class="field">
+                <label for="guest-side">Pihak</label>
+                <input id="guest-side" type="text" placeholder="Pria / Wanita / Umum">
+              </div>
+            </div>
+            <div class="field">
+              <label for="guest-notes">Catatan</label>
+              <textarea id="guest-notes"></textarea>
+            </div>
+            <button class="btn btn-primary" type="submit"><i class="fas fa-user-plus"></i> Simpan Tamu</button>
+          </form>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Guest</th>
+                <th>Link Personal</th>
+                <th>QR</th>
+                <th>Status</th>
+                <th>Views</th>
+                <th>Check-In</th>
+                <th>Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="guest-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" id="panel-rsvp">
+      <h2>Smart RSVP</h2>
+      <p class="panel-subtitle">Lihat detail RSVP, preferensi kehadiran, kuota tamu, dan status check-in.</p>
       <div class="table-wrap">
         <table>
           <thead>
             <tr>
-              <th>#</th>
               <th>Nama</th>
               <th>Kehadiran</th>
-              <th>Jumlah Tamu</th>
+              <th>Jumlah</th>
+              <th>Kontak</th>
+              <th>Kategori</th>
+              <th>Preferensi</th>
               <th>Ucapan</th>
-              <th>Status Ucapan</th>
-              <th>Waktu</th>
+              <th>Check-In</th>
               <th>Aksi</th>
             </tr>
           </thead>
           <tbody id="rsvp-tbody"></tbody>
         </table>
       </div>
-      <div class="empty" id="rsvp-empty" style="display:none">
-        <i class="fas fa-inbox"></i>
-        <p>Belum ada RSVP masuk.</p>
-      </div>
-    </div>
+    </section>
 
-    <!-- Tab 2: Wishes Management -->
-    <div class="tab-content" id="wishes-manage">
-      <div class="wishes-grid" id="wishes-grid"></div>
-      <div class="empty" id="wishes-empty" style="display:none">
-        <i class="fas fa-comment-slash"></i>
-        <p>Belum ada ucapan masuk.</p>
-      </div>
-    </div>
+    <section class="panel" id="panel-guestbook">
+      <h2>Digital Guestbook Premium</h2>
+      <p class="panel-subtitle">Moderasi ucapan, tampilkan hanya pesan terbaik, dan jaga kualitas guestbook.</p>
+      <div id="guestbook-grid" class="list-grid"></div>
+    </section>
+
+    <section class="panel" id="panel-photos">
+      <h2>Live Guest Photo Wall</h2>
+      <p class="panel-subtitle">Lihat foto tamu yang masuk, tampilkan atau sembunyikan, dan hapus jika diperlukan.</p>
+      <div id="photo-grid" class="list-grid"></div>
+    </section>
   </div>
 
   <script>
-    const API = '';
+    const state = {
+      guests: [],
+      rsvps: [],
+      photos: [],
+      analytics: null
+    };
 
-    // ── Tabs ──
-    document.querySelectorAll('.tab').forEach(tab => {
+    document.querySelectorAll('.tab').forEach((tab) => {
       tab.addEventListener('click', () => {
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        document.querySelectorAll('.tab').forEach((item) => item.classList.remove('active'));
+        document.querySelectorAll('.panel').forEach((panel) => panel.classList.remove('active'));
         tab.classList.add('active');
-        document.getElementById(tab.dataset.tab).classList.add('active');
+        document.getElementById(`panel-${tab.dataset.tab}`).classList.add('active');
       });
     });
 
-    // ── Load Stats ──
-    async function loadStats() {
-      const res = await fetch(API + '/api/admin/stats');
-      const s = await res.json();
-      document.getElementById('stat-total').textContent = s.totalRsvp;
-      document.getElementById('stat-hadir').textContent = s.totalHadir;
-      document.getElementById('stat-tidak').textContent = s.totalTidakHadir;
-      document.getElementById('stat-tamu').textContent = s.totalTamu;
-      document.getElementById('stat-wishes').textContent = s.totalApprovedWishes;
+    document.getElementById('guest-form').addEventListener('submit', async (event) => {
+      event.preventDefault();
+      await fetch('/api/admin/guests', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: value('guest-name'),
+          phone: value('guest-phone'),
+          maxGuests: parseInt(value('guest-max') || '1', 10) || 1,
+          category: value('guest-category') || 'Undangan',
+          side: value('guest-side') || 'Umum',
+          notes: value('guest-notes')
+        })
+      });
+      event.target.reset();
+      refreshAll();
+    });
+
+    async function refreshAll() {
+      const [statsRes, analyticsRes, guestsRes, rsvpRes, photosRes] = await Promise.all([
+        fetch('/api/admin/stats'),
+        fetch('/api/admin/analytics'),
+        fetch('/api/admin/guests'),
+        fetch('/api/admin/rsvp'),
+        fetch('/api/admin/photos')
+      ]);
+
+      const stats = await statsRes.json();
+      state.analytics = await analyticsRes.json();
+      state.guests = await guestsRes.json();
+      state.rsvps = await rsvpRes.json();
+      state.photos = await photosRes.json();
+
+      renderStats(stats);
+      renderOverview();
+      renderGuests();
+      renderRsvps();
+      renderGuestbook();
+      renderPhotos();
     }
 
-    // ── Load RSVP Table ──
-    async function loadRsvp() {
-      const res = await fetch(API + '/api/admin/rsvp');
-      const data = await res.json();
-      const tbody = document.getElementById('rsvp-tbody');
-      const empty = document.getElementById('rsvp-empty');
+    function renderStats(stats) {
+      const statsGrid = document.getElementById('stats-grid');
+      const items = [
+        ['Total Invites', stats.totalInvites, 'fas fa-user-group', 'var(--gold)'],
+        ['RSVP Conversion', `${stats.rsvpConversion}%`, 'fas fa-chart-line', 'var(--green)'],
+        ['Views', stats.totalViews, 'fas fa-eye', 'var(--blue)'],
+        ['Checked In', stats.totalCheckedIn, 'fas fa-qrcode', 'var(--gold-light)'],
+        ['Total RSVP', stats.totalRsvp, 'fas fa-envelope-open-text', 'var(--cream)'],
+        ['Hadir', stats.totalHadir, 'fas fa-check-circle', 'var(--green)'],
+        ['Guestbook', stats.totalApprovedWishes, 'fas fa-book-open', 'var(--blue)'],
+        ['Photo Wall', stats.totalPhotoUploads, 'fas fa-camera', 'var(--gold)']
+      ];
 
-      if (data.length === 0) {
-        tbody.innerHTML = '';
-        empty.style.display = 'block';
-        return;
-      }
-      empty.style.display = 'none';
-
-      tbody.innerHTML = data.map((r, i) => `
-        <tr>
-          <td>${i + 1}</td>
-          <td><strong>${esc(r.name)}</strong></td>
-          <td><span class="badge ${r.attendance === 'hadir' ? 'badge-hadir' : 'badge-tidak'}">${r.attendance === 'hadir' ? '✓ Hadir' : '✗ Tidak'}</span></td>
-          <td style="text-align:center">${r.guests}</td>
-          <td class="msg-text">${r.message ? esc(r.message) : '<span style="color:#555">—</span>'}</td>
-          <td>${r.message ? `<span class="badge ${r.is_approved ? 'badge-approved' : 'badge-hidden'}">${r.is_approved ? '✓ Tampil' : '✗ Disembunyikan'}</span>` : '—'}</td>
-          <td class="time">${r.created_at}</td>
-          <td>
-            <div class="btn-group">
-              ${r.message ? `<button class="btn ${r.is_approved ? 'btn-hide' : 'btn-approve'}" onclick="toggleWish(${r.id})">${r.is_approved ? '<i class=\"fas fa-eye-slash\"></i> Sembunyikan' : '<i class=\"fas fa-eye\"></i> Tampilkan'}</button>` : ''}
-              <button class="btn btn-delete" onclick="deleteRsvp(${r.id})"><i class="fas fa-trash"></i></button>
-            </div>
-          </td>
-        </tr>
-      `).join('');
-    }
-
-    // ── Load Wishes Grid ──
-    async function loadWishes() {
-      const res = await fetch(API + '/api/admin/rsvp');
-      const data = await res.json();
-      const withMsg = data.filter(r => r.message && r.message.trim());
-      const grid = document.getElementById('wishes-grid');
-      const empty = document.getElementById('wishes-empty');
-
-      if (withMsg.length === 0) {
-        grid.innerHTML = '';
-        empty.style.display = 'block';
-        return;
-      }
-      empty.style.display = 'none';
-
-      grid.innerHTML = withMsg.map(r => `
-        <div class="wish-card ${r.is_approved ? 'approved' : 'hidden'}">
-          <div class="wish-header">
-            <span class="wish-name">${esc(r.name)}</span>
-            <span class="badge ${r.is_approved ? 'badge-approved' : 'badge-hidden'}">${r.is_approved ? 'Tampil' : 'Tersembunyi'}</span>
-          </div>
-          <p class="wish-msg">"${esc(r.message)}"</p>
-          <div class="wish-footer">
-            <span class="time">${r.created_at}</span>
-            <button class="btn ${r.is_approved ? 'btn-hide' : 'btn-approve'}" onclick="toggleWish(${r.id})">
-              ${r.is_approved ? '<i class=\"fas fa-eye-slash\"></i> Sembunyikan' : '<i class=\"fas fa-eye\"></i> Tampilkan'}
-            </button>
-          </div>
+      statsGrid.innerHTML = items.map(([label, value, icon, color]) => `
+        <div class="stat-card">
+          <span class="stat-label"><i class="${icon}" style="margin-right:8px;color:${color}"></i>${label}</span>
+          <span class="stat-number" style="color:${color}">${escapeHtml(String(value))}</span>
         </div>
       `).join('');
     }
 
-    // ── Actions ──
+    function renderOverview() {
+      const recentEvents = state.analytics?.recentEvents || [];
+      const performance = state.analytics?.guestPerformance || [];
+
+      document.getElementById('recent-events').innerHTML = recentEvents.length
+        ? recentEvents.map((event) => `
+            <div class="mini-card" style="margin-bottom:12px;">
+              <h3>${escapeHtml(event.guest_name)}</h3>
+              <p class="muted">${escapeHtml(event.path)} • ${escapeHtml(event.created_at)}</p>
+            </div>
+          `).join('')
+        : '<div class="empty">Belum ada aktivitas tercatat.</div>';
+
+      document.getElementById('guest-performance').innerHTML = performance.length
+        ? performance.map((guest) => `
+            <div class="mini-card">
+              <h3>${escapeHtml(guest.name)}</h3>
+              <p class="muted">${escapeHtml(guest.category)} • ${escapeHtml(guest.side)}</p>
+              <p style="margin-top:10px;">Views: <strong>${guest.total_views}</strong></p>
+              <p class="muted" style="margin-top:8px;">RSVP: ${guest.responded_at ? escapeHtml(guest.responded_at) : 'Belum'}</p>
+              <p class="muted">Check-In: ${guest.checked_in_at ? escapeHtml(guest.checked_in_at) : 'Belum'}</p>
+            </div>
+          `).join('')
+        : '<div class="empty">Belum ada data engagement tamu.</div>';
+    }
+
+    function renderGuests() {
+      const tbody = document.getElementById('guest-tbody');
+      tbody.innerHTML = state.guests.length ? state.guests.map((guest) => `
+        <tr>
+          <td>
+            <strong>${escapeHtml(guest.name)}</strong><br>
+            <span class="muted">${escapeHtml(guest.category)} • ${escapeHtml(guest.side)}</span>
+          </td>
+          <td class="mono">${escapeHtml(guest.invitation_url)}</td>
+          <td>
+            <div class="qr-thumb"><img src="${guest.qr_svg_url}" alt="QR ${escapeHtml(guest.name)}"></div>
+          </td>
+          <td>
+            <div class="stack">
+              <span class="badge badge-gold">${guest.max_guests} tamu</span>
+              <span class="badge ${guest.responded_at ? 'badge-blue' : 'badge-red'}">${guest.responded_at ? 'RSVP masuk' : 'Belum RSVP'}</span>
+            </div>
+          </td>
+          <td>${guest.total_views || 0}</td>
+          <td>${guest.checked_in_at ? `<span class="badge badge-green">Checked In</span><div class="muted" style="margin-top:8px">${escapeHtml(guest.checked_in_at)}</div>` : '<span class="badge badge-red">Belum</span>'}</td>
+          <td>
+            <div class="stack">
+              <button class="btn btn-soft" onclick="copyText('${escapeJs(guest.invitation_url)}')"><i class="fas fa-link"></i> Copy Link</button>
+              <button class="btn btn-soft" onclick="copyText('${escapeJs(guest.checkin_url)}')"><i class="fas fa-qrcode"></i> Copy Check-In</button>
+              <button class="btn btn-soft" onclick="toggleCheckin(${guest.id})"><i class="fas fa-check"></i> Toggle</button>
+              <button class="btn btn-danger" onclick="removeGuest(${guest.id})"><i class="fas fa-trash"></i></button>
+            </div>
+          </td>
+        </tr>
+      `).join('') : '<tr><td colspan="7" class="empty">Belum ada tamu personal.</td></tr>';
+    }
+
+    function renderRsvps() {
+      const tbody = document.getElementById('rsvp-tbody');
+      tbody.innerHTML = state.rsvps.length ? state.rsvps.map((rsvp) => `
+        <tr>
+          <td><strong>${escapeHtml(rsvp.name)}</strong><br><span class="muted">${escapeHtml(rsvp.created_at)}</span></td>
+          <td><span class="badge ${rsvp.attendance === 'hadir' ? 'badge-green' : 'badge-red'}">${rsvp.attendance === 'hadir' ? 'Hadir' : 'Tidak Hadir'}</span></td>
+          <td>${escapeHtml(String(rsvp.guests || 1))}</td>
+          <td>${escapeHtml(rsvp.phone || '-')}</td>
+          <td>${escapeHtml(rsvp.relation || rsvp.guest_meta?.category || '-')}</td>
+          <td>${escapeHtml(rsvp.meal_preference || '-')}</td>
+          <td>${escapeHtml(rsvp.message || '-')}</td>
+          <td>${rsvp.checked_in_at ? `<span class="badge badge-green">Sudah</span><div class="muted" style="margin-top:8px">${escapeHtml(rsvp.checked_in_at)}</div>` : '<span class="badge badge-red">Belum</span>'}</td>
+          <td><button class="btn btn-danger" onclick="removeRsvp(${rsvp.id})"><i class="fas fa-trash"></i></button></td>
+        </tr>
+      `).join('') : '<tr><td colspan="9" class="empty">Belum ada RSVP masuk.</td></tr>';
+    }
+
+    function renderGuestbook() {
+      const cards = state.rsvps.filter((item) => item.message);
+      document.getElementById('guestbook-grid').innerHTML = cards.length
+        ? cards.map((wish) => `
+            <div class="mini-card">
+              <h3>${escapeHtml(wish.name)}</h3>
+              <p class="muted">${escapeHtml(wish.created_at)}</p>
+              <p style="margin:12px 0 16px;line-height:1.8;">${escapeHtml(wish.message)}</p>
+              <div class="stack">
+                <span class="badge ${wish.is_approved ? 'badge-blue' : 'badge-red'}">${wish.is_approved ? 'Tampil' : 'Disembunyikan'}</span>
+                <button class="btn btn-soft" onclick="toggleWish(${wish.id})">${wish.is_approved ? 'Sembunyikan' : 'Tampilkan'}</button>
+              </div>
+            </div>
+          `).join('')
+        : '<div class="empty">Belum ada ucapan yang masuk.</div>';
+    }
+
+    function renderPhotos() {
+      document.getElementById('photo-grid').innerHTML = state.photos.length
+        ? state.photos.map((photo) => `
+            <div class="mini-card photo-card">
+              <img src="${photo.image_url}" alt="${escapeHtml(photo.caption || photo.guest_name)}">
+              <h3>${escapeHtml(photo.guest_name)}</h3>
+              <p class="muted">${escapeHtml(photo.created_at)}</p>
+              ${photo.caption ? `<p style="margin:12px 0 16px;line-height:1.8;">${escapeHtml(photo.caption)}</p>` : ''}
+              <div class="stack">
+                <span class="badge ${photo.is_approved ? 'badge-green' : 'badge-red'}">${photo.is_approved ? 'Tampil' : 'Disembunyikan'}</span>
+                <button class="btn btn-soft" onclick="togglePhoto(${photo.id})">${photo.is_approved ? 'Sembunyikan' : 'Tampilkan'}</button>
+                <button class="btn btn-danger" onclick="removePhoto(${photo.id})">Hapus</button>
+              </div>
+            </div>
+          `).join('')
+        : '<div class="empty">Belum ada foto tamu.</div>';
+    }
+
     async function toggleWish(id) {
-      await fetch(API + '/api/admin/wishes/' + id + '/toggle', { method: 'PATCH' });
+      await fetch(`/api/admin/wishes/${id}/toggle`, { method: 'PATCH' });
       refreshAll();
     }
 
-    async function deleteRsvp(id) {
-      if (!confirm('Yakin ingin menghapus RSVP ini?')) return;
-      await fetch(API + '/api/admin/rsvp/' + id, { method: 'DELETE' });
+    async function togglePhoto(id) {
+      await fetch(`/api/admin/photos/${id}/toggle`, { method: 'PATCH' });
       refreshAll();
     }
 
-    function refreshAll() {
-      loadStats();
-      loadRsvp();
-      loadWishes();
+    async function removePhoto(id) {
+      await fetch(`/api/admin/photos/${id}`, { method: 'DELETE' });
+      refreshAll();
     }
 
-    function esc(str) {
-      const d = document.createElement('div');
-      d.textContent = str;
-      return d.innerHTML;
+    async function toggleCheckin(id) {
+      await fetch(`/api/admin/guests/${id}/checkin`, { method: 'PATCH' });
+      refreshAll();
     }
 
-    // ── Init ──
+    async function removeGuest(id) {
+      if (!confirm('Hapus tamu ini?')) return;
+      await fetch(`/api/admin/guests/${id}`, { method: 'DELETE' });
+      refreshAll();
+    }
+
+    async function removeRsvp(id) {
+      if (!confirm('Hapus data RSVP ini?')) return;
+      await fetch(`/api/admin/rsvp/${id}`, { method: 'DELETE' });
+      refreshAll();
+    }
+
+    function copyText(text) {
+      navigator.clipboard.writeText(text);
+    }
+
+    function value(id) {
+      return document.getElementById(id).value.trim();
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    function escapeJs(text) {
+      return String(text).replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+    }
+
+    window.toggleWish = toggleWish;
+    window.togglePhoto = togglePhoto;
+    window.removePhoto = removePhoto;
+    window.toggleCheckin = toggleCheckin;
+    window.removeGuest = removeGuest;
+    window.removeRsvp = removeRsvp;
+    window.copyText = copyText;
+
     refreshAll();
-    // Auto-refresh setiap 10 detik
     setInterval(refreshAll, 10000);
   </script>
 </body>

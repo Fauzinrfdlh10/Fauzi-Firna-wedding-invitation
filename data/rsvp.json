@@ -1,11 +1,17 @@
 [
   {
+    "is_approved": true,
+    "meal_preference": "",
+    "relation": "",
+    "phone": "",
+    "guest_id": null,
+    "guest_token": "",
+    "checked_in_at": "",
     "id": 1776652196618,
     "name": "Marni",
     "attendance": "hadir",
     "guests": 2,
     "message": "HWD BESTIEEEE",
-    "is_approved": true,
     "created_at": "20/4/2026, 09.29.56"
   }
 ]
