@@ -21,6 +21,7 @@
       --green: #6dd8a7;
       --red: #f48f8f;
       --blue: #8ab8ff;
+      --yellow: #f0d76e;
       --radius: 22px;
       --border: rgba(255,255,255,.08);
       --shadow: 0 25px 70px rgba(0,0,0,.28);
@@ -246,6 +247,7 @@
     .badge-red { background: rgba(244,143,143,.12); color: var(--red); }
     .badge-blue { background: rgba(138,184,255,.12); color: var(--blue); }
     .badge-gold { background: rgba(200,169,97,.12); color: var(--gold-light); }
+    .badge-yellow { background: rgba(240,215,110,.12); color: var(--yellow); }
     .stack {
       display: flex;
       flex-wrap: wrap;
@@ -296,10 +298,184 @@
       padding: 44px 20px;
       color: var(--muted);
     }
+
+    /* ═══════════ SCANNER STYLES ═══════════ */
+    .scanner-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .scanner-box {
+      padding: 24px;
+      border-radius: 24px;
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.06);
+    }
+    .scanner-preview {
+      width: 100%;
+      aspect-ratio: 1;
+      max-height: 420px;
+      border-radius: 20px;
+      overflow: hidden;
+      background: #000;
+      position: relative;
+      margin-bottom: 20px;
+    }
+    .scanner-preview #qr-reader {
+      width: 100% !important;
+      border: none !important;
+    }
+    .scanner-preview #qr-reader video {
+      border-radius: 20px !important;
+    }
+    .scanner-preview #qr-reader__scan_region {
+      min-height: 280px !important;
+    }
+    .scanner-preview #qr-reader__dashboard {
+      padding: 10px !important;
+    }
+    .scanner-preview #qr-reader__dashboard_section_csr button {
+      background: linear-gradient(135deg, var(--gold-light), var(--gold)) !important;
+      color: #16130f !important;
+      border: none !important;
+      padding: 10px 20px !important;
+      border-radius: 999px !important;
+      font-weight: 600 !important;
+      cursor: pointer !important;
+      font-family: 'Inter', sans-serif !important;
+    }
+    .scanner-preview #qr-reader__dashboard_section_csr select {
+      background: rgba(12,11,9,.68) !important;
+      color: var(--cream) !important;
+      border: 1px solid rgba(255,255,255,.15) !important;
+      border-radius: 12px !important;
+      padding: 8px 12px !important;
+      font-family: 'Inter', sans-serif !important;
+    }
+    .scanner-preview #qr-reader__dashboard_section_swaplink {
+      color: var(--gold-light) !important;
+      text-decoration: underline !important;
+    }
+    .scanner-controls {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+    .scanner-result {
+      padding: 28px;
+      border-radius: 20px;
+      text-align: center;
+      animation: fadeSlideUp .4s ease-out;
+      margin-bottom: 16px;
+    }
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .result-success {
+      background: rgba(109,216,167,.08);
+      border: 2px solid rgba(109,216,167,.3);
+    }
+    .result-already {
+      background: rgba(240,215,110,.08);
+      border: 2px solid rgba(240,215,110,.3);
+    }
+    .result-invalid {
+      background: rgba(244,143,143,.08);
+      border: 2px solid rgba(244,143,143,.3);
+    }
+    .result-icon {
+      font-size: 3.5rem;
+      margin-bottom: 12px;
+    }
+    .result-success .result-icon { color: var(--green); }
+    .result-already .result-icon { color: var(--yellow); }
+    .result-invalid .result-icon { color: var(--red); }
+    .result-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+    .result-success .result-title { color: var(--green); }
+    .result-already .result-title { color: var(--yellow); }
+    .result-invalid .result-title { color: var(--red); }
+    .result-detail {
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: .9rem;
+    }
+    .result-guest-info {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+      justify-content: center;
+    }
+    .scan-history {
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    .scan-entry {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.02);
+      border: 1px solid rgba(255,255,255,.04);
+      margin-bottom: 10px;
+      animation: fadeSlideUp .3s ease-out;
+    }
+    .scan-entry-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .scan-entry-success .scan-entry-icon { background: rgba(109,216,167,.12); color: var(--green); }
+    .scan-entry-already .scan-entry-icon { background: rgba(240,215,110,.12); color: var(--yellow); }
+    .scan-entry-invalid .scan-entry-icon { background: rgba(244,143,143,.12); color: var(--red); }
+    .scan-entry-info { flex: 1; }
+    .scan-entry-name { font-weight: 600; font-size: .88rem; color: var(--cream); }
+    .scan-entry-time { font-size: .72rem; color: var(--muted); margin-top: 2px; }
+    .scanner-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .scanner-stat {
+      padding: 16px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.06);
+      text-align: center;
+    }
+    .scanner-stat-number {
+      font-size: 1.8rem;
+      font-weight: 700;
+      display: block;
+    }
+    .scanner-stat-label {
+      font-size: .7rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 6px;
+      display: block;
+    }
+
     @media (max-width: 1180px) {
       .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .grid-2 { grid-template-columns: 1fr; }
       .list-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .scanner-layout { grid-template-columns: 1fr; }
     }
     @media (max-width: 720px) {
       .page { padding: 14px; }
@@ -309,6 +485,7 @@
       .list-grid { grid-template-columns: 1fr; }
       .panel { padding: 18px; }
       table { min-width: 720px; }
+      .scanner-stats { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -326,12 +503,14 @@
 
     <div class="tabs">
       <button class="tab active" data-tab="overview">Overview</button>
+      <button class="tab" data-tab="scanner"><i class="fas fa-qrcode" style="margin-right:6px"></i>Scanner</button>
       <button class="tab" data-tab="guests">Guests</button>
       <button class="tab" data-tab="rsvp">RSVP</button>
       <button class="tab" data-tab="guestbook">Guestbook</button>
       <button class="tab" data-tab="photos">Photo Wall</button>
     </div>
 
+    <!-- ═══════════ OVERVIEW ═══════════ -->
     <section class="panel active" id="panel-overview">
       <h2>Business Overview</h2>
       <p class="panel-subtitle">Ringkasan performa undangan, aktivitas tamu, dan sinyal konversi.</p>
@@ -347,6 +526,48 @@
       </div>
     </section>
 
+    <!-- ═══════════ SCANNER ═══════════ -->
+    <section class="panel" id="panel-scanner">
+      <h2><i class="fas fa-qrcode" style="color:var(--gold);margin-right:12px;"></i>QR Check-In Scanner</h2>
+      <p class="panel-subtitle">Scan QR Code tamu untuk melakukan check-in secara real-time pada hari acara. Arahkan kamera ke QR Code pada undangan digital tamu.</p>
+
+      <div class="scanner-stats" id="scanner-stats">
+        <div class="scanner-stat">
+          <span class="scanner-stat-number" id="scan-stat-total" style="color:var(--gold)">0</span>
+          <span class="scanner-stat-label">Total Undangan</span>
+        </div>
+        <div class="scanner-stat">
+          <span class="scanner-stat-number" id="scan-stat-checkedin" style="color:var(--green)">0</span>
+          <span class="scanner-stat-label">Sudah Check-In</span>
+        </div>
+        <div class="scanner-stat">
+          <span class="scanner-stat-number" id="scan-stat-remaining" style="color:var(--yellow)">0</span>
+          <span class="scanner-stat-label">Belum Datang</span>
+        </div>
+      </div>
+
+      <div class="scanner-layout">
+        <div class="scanner-box">
+          <h3 style="margin-bottom:14px; color:var(--cream);"><i class="fas fa-camera" style="color:var(--gold);margin-right:8px;"></i>Kamera Scanner</h3>
+          <div class="scanner-preview">
+            <div id="qr-reader"></div>
+          </div>
+          <div class="scanner-controls">
+            <button class="btn btn-primary" id="btn-start-scan" onclick="startScanner()"><i class="fas fa-play"></i> Mulai Scan</button>
+            <button class="btn btn-soft" id="btn-stop-scan" onclick="stopScanner()" style="display:none;"><i class="fas fa-stop"></i> Stop Scan</button>
+          </div>
+          <div id="scan-result-area"></div>
+        </div>
+        <div class="scanner-box">
+          <h3 style="margin-bottom:14px; color:var(--cream);"><i class="fas fa-clock-rotate-left" style="color:var(--gold);margin-right:8px;"></i>Riwayat Scan</h3>
+          <div class="scan-history" id="scan-history">
+            <div class="empty"><i class="fas fa-qrcode" style="font-size:2rem;color:var(--gold);opacity:.3;display:block;margin-bottom:12px;"></i>Belum ada scan. Mulai scanner untuk melakukan check-in tamu.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ GUESTS ═══════════ -->
     <section class="panel" id="panel-guests">
       <h2>Guest Link Personal + QR Check-In</h2>
       <p class="panel-subtitle">Tambahkan tamu, generate link personal, dan siapkan QR check-in untuk hari acara.</p>
@@ -404,6 +625,7 @@
       </div>
     </section>
 
+    <!-- ═══════════ RSVP ═══════════ -->
     <section class="panel" id="panel-rsvp">
       <h2>Smart RSVP</h2>
       <p class="panel-subtitle">Lihat detail RSVP, preferensi kehadiran, kuota tamu, dan status check-in.</p>
@@ -427,18 +649,23 @@
       </div>
     </section>
 
+    <!-- ═══════════ GUESTBOOK ═══════════ -->
     <section class="panel" id="panel-guestbook">
       <h2>Digital Guestbook Premium</h2>
       <p class="panel-subtitle">Moderasi ucapan, tampilkan hanya pesan terbaik, dan jaga kualitas guestbook.</p>
       <div id="guestbook-grid" class="list-grid"></div>
     </section>
 
+    <!-- ═══════════ PHOTOS ═══════════ -->
     <section class="panel" id="panel-photos">
       <h2>Live Guest Photo Wall</h2>
       <p class="panel-subtitle">Lihat foto tamu yang masuk, tampilkan atau sembunyikan, dan hapus jika diperlukan.</p>
       <div id="photo-grid" class="list-grid"></div>
     </section>
   </div>
+
+  <!-- html5-qrcode library -->
+  <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 
   <script>
     const state = {
@@ -448,6 +675,15 @@
       analytics: null
     };
 
+    let html5QrCode = null;
+    let scannerRunning = false;
+    let lastScannedToken = '';
+    let lastScanTime = 0;
+    const scanHistory = [];
+    const SCAN_COOLDOWN_MS = 3000; // Prevent duplicate scans within 3 seconds
+
+    // ═══════════ TAB NAVIGATION ═══════════
+
     document.querySelectorAll('.tab').forEach((tab) => {
       tab.addEventListener('click', () => {
         document.querySelectorAll('.tab').forEach((item) => item.classList.remove('active'));
@@ -456,6 +692,8 @@
         document.getElementById(`panel-${tab.dataset.tab}`).classList.add('active');
       });
     });
+
+    // ═══════════ GUEST FORM ═══════════
 
     document.getElementById('guest-form').addEventListener('submit', async (event) => {
       event.preventDefault();
@@ -474,6 +712,201 @@
       event.target.reset();
       refreshAll();
     });
+
+    // ═══════════ QR SCANNER ═══════════
+
+    async function startScanner() {
+      if (scannerRunning) return;
+
+      const readerEl = document.getElementById('qr-reader');
+      if (!readerEl) return;
+
+      html5QrCode = new Html5Qrcode('qr-reader');
+
+      try {
+        await html5QrCode.start(
+          { facingMode: 'environment' },
+          {
+            fps: 10,
+            qrbox: { width: 250, height: 250 },
+            aspectRatio: 1.0
+          },
+          onScanSuccess,
+          () => {} // Ignore scan failures (no QR in view)
+        );
+
+        scannerRunning = true;
+        document.getElementById('btn-start-scan').style.display = 'none';
+        document.getElementById('btn-stop-scan').style.display = 'inline-flex';
+      } catch (err) {
+        console.error('Scanner error:', err);
+        showScanResult('INVALID', 'Gagal mengakses kamera. Pastikan browser memiliki izin kamera.', null);
+      }
+    }
+
+    async function stopScanner() {
+      if (!scannerRunning || !html5QrCode) return;
+
+      try {
+        await html5QrCode.stop();
+        html5QrCode.clear();
+      } catch (err) {
+        console.error('Stop scanner error:', err);
+      }
+
+      scannerRunning = false;
+      document.getElementById('btn-start-scan').style.display = 'inline-flex';
+      document.getElementById('btn-stop-scan').style.display = 'none';
+    }
+
+    async function onScanSuccess(decodedText) {
+      const now = Date.now();
+
+      // Prevent rapid duplicate scans
+      if (decodedText === lastScannedToken && (now - lastScanTime) < SCAN_COOLDOWN_MS) {
+        return;
+      }
+
+      lastScannedToken = decodedText;
+      lastScanTime = now;
+
+      // Play a beep sound
+      playBeep();
+
+      try {
+        const res = await fetch('/api/admin/scan-checkin', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ token: decodedText })
+        });
+        const data = await res.json();
+
+        showScanResult(data.status, data.message, data.guest);
+        addScanHistory(data);
+        updateScannerStats();
+      } catch (err) {
+        showScanResult('INVALID', 'Gagal menghubungi server. Periksa koneksi.', null);
+      }
+    }
+
+    function showScanResult(status, message, guest) {
+      const area = document.getElementById('scan-result-area');
+      let cssClass = 'result-invalid';
+      let icon = '<i class="fas fa-times-circle"></i>';
+
+      if (status === 'SUCCESS') {
+        cssClass = 'result-success';
+        icon = '<i class="fas fa-check-circle"></i>';
+      } else if (status === 'ALREADY') {
+        cssClass = 'result-already';
+        icon = '<i class="fas fa-exclamation-triangle"></i>';
+      }
+
+      let guestInfoHtml = '';
+      if (guest) {
+        guestInfoHtml = `
+          <div class="result-guest-info">
+            <span class="badge badge-gold">${escapeHtml(guest.category || 'Undangan')}</span>
+            <span class="badge badge-blue">${escapeHtml(guest.side || 'Umum')}</span>
+            <span class="badge badge-gold">${guest.max_guests || 1} Tamu</span>
+            ${guest.total_guests ? `<span class="badge badge-green">RSVP: ${guest.total_guests} orang</span>` : ''}
+          </div>
+        `;
+      }
+
+      area.innerHTML = `
+        <div class="scanner-result ${cssClass}">
+          <div class="result-icon">${icon}</div>
+          <h3 class="result-title">${status === 'SUCCESS' ? 'CHECK-IN BERHASIL' : status === 'ALREADY' ? 'SUDAH CHECK-IN' : 'AKSES DITOLAK'}</h3>
+          <p class="result-detail">${escapeHtml(message)}</p>
+          ${guest && guest.checked_in_at ? `<p class="result-detail" style="margin-top:8px;"><i class="fas fa-clock"></i> ${escapeHtml(guest.checked_in_at)}</p>` : ''}
+          ${guestInfoHtml}
+        </div>
+      `;
+
+      // Auto-clear after 8 seconds
+      setTimeout(() => {
+        if (area.querySelector(`.${cssClass}`)) {
+          area.innerHTML = '';
+        }
+      }, 8000);
+    }
+
+    function addScanHistory(data) {
+      const time = new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      const entry = {
+        status: data.status,
+        name: data.guest?.name || 'Unknown',
+        message: data.message,
+        time
+      };
+
+      scanHistory.unshift(entry);
+      if (scanHistory.length > 50) scanHistory.pop();
+      renderScanHistory();
+    }
+
+    function renderScanHistory() {
+      const container = document.getElementById('scan-history');
+      if (!scanHistory.length) {
+        container.innerHTML = '<div class="empty"><i class="fas fa-qrcode" style="font-size:2rem;color:var(--gold);opacity:.3;display:block;margin-bottom:12px;"></i>Belum ada scan.</div>';
+        return;
+      }
+
+      container.innerHTML = scanHistory.map((entry) => {
+        let entryClass = 'scan-entry-invalid';
+        let icon = '<i class="fas fa-times"></i>';
+        if (entry.status === 'SUCCESS') {
+          entryClass = 'scan-entry-success';
+          icon = '<i class="fas fa-check"></i>';
+        } else if (entry.status === 'ALREADY') {
+          entryClass = 'scan-entry-already';
+          icon = '<i class="fas fa-exclamation"></i>';
+        }
+
+        return `
+          <div class="scan-entry ${entryClass}">
+            <div class="scan-entry-icon">${icon}</div>
+            <div class="scan-entry-info">
+              <div class="scan-entry-name">${escapeHtml(entry.name)}</div>
+              <div class="scan-entry-time">${escapeHtml(entry.message)} • ${entry.time}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    async function updateScannerStats() {
+      try {
+        const res = await fetch('/api/admin/stats');
+        const stats = await res.json();
+        document.getElementById('scan-stat-total').textContent = stats.totalInvites || 0;
+        document.getElementById('scan-stat-checkedin').textContent = stats.totalCheckedIn || 0;
+        document.getElementById('scan-stat-remaining').textContent = (stats.totalInvites || 0) - (stats.totalCheckedIn || 0);
+      } catch (err) {
+        // Ignore
+      }
+    }
+
+    function playBeep() {
+      try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const oscillator = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+        oscillator.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+        oscillator.frequency.value = 880;
+        oscillator.type = 'sine';
+        gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.15);
+        oscillator.start(audioCtx.currentTime);
+        oscillator.stop(audioCtx.currentTime + 0.15);
+      } catch (e) {
+        // Audio not available
+      }
+    }
+
+    // ═══════════ DATA REFRESH ═══════════
 
     async function refreshAll() {
       const [statsRes, analyticsRes, guestsRes, rsvpRes, photosRes] = await Promise.all([
@@ -496,6 +929,7 @@
       renderRsvps();
       renderGuestbook();
       renderPhotos();
+      updateScannerStats();
     }
 
     function renderStats(stats) {
@@ -629,6 +1063,8 @@
         : '<div class="empty">Belum ada foto tamu.</div>';
     }
 
+    // ═══════════ ACTIONS ═══════════
+
     async function toggleWish(id) {
       await fetch(`/api/admin/wishes/${id}/toggle`, { method: 'PATCH' });
       refreshAll();
@@ -686,6 +1122,8 @@
     window.removeGuest = removeGuest;
     window.removeRsvp = removeRsvp;
     window.copyText = copyText;
+    window.startScanner = startScanner;
+    window.stopScanner = stopScanner;
 
     refreshAll();
     setInterval(refreshAll, 10000);
